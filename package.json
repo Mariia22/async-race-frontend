@@ -10,26 +10,18 @@
     "format": "npx prettier --write .",
     "lint": "npx eslint src",
     "lint:write": "npm run lint -- --fix",
-    "husky": {    
-   "hooks": {      
-     "pre-commit": "lint-staged" 
-   }  
-},
-    "lint-staged": {
-      "*.(ts|tsx|scss)": [
-        "npm run format",
-        "npm run lint:write",
-        "git add"
-      ]
+    "husky": {
+      "hooks": {
+        "pre-commit": "npm run format && npm run lint:write && git add -A ."
+      }
     },
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
     "@types/react-redux": "^7.1.33",
     "classnames": "^2.5.1",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.13",
@@ -46,6 +38,7 @@
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "husky": "^9.0.11",
     "prettier": "3.2.5",
     "sass": "^1.75.0",
     "typescript": "^5.2.2",
