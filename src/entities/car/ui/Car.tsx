@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../../../shared/ui/Button/Button';
-import CarSvg from '../assets/car.svg?react';
+import CarIcon from '../assets/car.svg?react';
 
 function Car() {
   return (
@@ -13,7 +13,7 @@ function Car() {
         <Button name="A" onClick={() => console.log('create')} />
         <Button name="B" onClick={() => console.log('create')} />
       </div>
-      <CarSvg fill="red" />
+      <CarIcon fill="red" />
     </>
   );
 }
