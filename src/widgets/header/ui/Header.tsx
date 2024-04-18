@@ -6,7 +6,7 @@ type Props = {
   routes: RouteType[] | RouteType;
 };
 
-function LayoutHeader({ routes }: Props) {
+function Header({ routes }: Props) {
   return (
     <nav>
       <ul>
@@ -25,4 +25,4 @@ function LayoutHeader({ routes }: Props) {
     </nav>
   );
 }
-export default LayoutHeader;
+export default Header;

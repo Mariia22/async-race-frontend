@@ -1,12 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { routes } from '../shared/lib/const';
-import LayoutHeader from '../widgets/layoutHeader/ui/LayoutHeader';
+import Header from '../widgets/header/ui/Header';
 
 const baseLayout = (
   <>
     <header>
-      <LayoutHeader routes={routes} />
+      <Header routes={routes} />
     </header>
     <main>
       <Outlet />
