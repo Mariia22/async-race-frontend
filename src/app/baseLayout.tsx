@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { routes } from '../shared/lib/const';
-import LayoutHeader from '../widgets/LayoutHeader/ui/LayoutHeader';
+import LayoutHeader from '../widgets/layoutHeader/ui/LayoutHeader';
 
 const baseLayout = (
   <>

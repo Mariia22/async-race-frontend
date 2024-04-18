@@ -3,3 +3,5 @@ export type RouteType = {
   link: string;
   name: string;
 };
+
+export type IconType = 'car';
