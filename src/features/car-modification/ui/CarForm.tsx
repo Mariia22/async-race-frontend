@@ -11,7 +11,7 @@ function CarForm({ name, onClick }: Props) {
     <form>
       <input type="text" placeholder="Car name" />
       <input type="color" />
-      <Button name={name} type="submit" onClick={onClick} />
+      <Button name={name} isFormSubmit onClick={onClick} />
     </form>
   );
 }
