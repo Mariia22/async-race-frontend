@@ -1,4 +1,3 @@
-import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import baseLayout from './baseLayout';
 import GaragePage from '../pages/garage/ui/Page';

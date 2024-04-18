@@ -1,4 +1,3 @@
-import React from 'react';
 import ControlRace from '../../../features/race-control/ui/ControlRace';
 import CarForm from '../../../features/car-modification/ui/CarForm';
 import CarGenerate from '../../../features/car-generate/ui/CarGenerate';

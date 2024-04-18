@@ -1,4 +1,3 @@
-import React from 'react';
 import ControlPanel from '../../../widgets/controlPanel/ui/ControlPanel';
 import RaceTrack from '../../../entities/race/ui/RaceTrack';
 import Pagination from '../../../shared/ui/Pagination/Pagination';
