@@ -14,7 +14,7 @@ export function getRandomColor(): string {
   return color;
 }
 
-export function generateArrayOfCars(): Partial<CarItemType>[] {
+export function generateCars(): Partial<CarItemType>[] {
   const newCarsArray: Partial<CarItemType>[] = [];
   for (let i = 0; i < NUMBER_OF_CARS; i += 1) {
     newCarsArray.push({

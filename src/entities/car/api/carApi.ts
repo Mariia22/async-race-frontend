@@ -25,10 +25,10 @@ export const carApi = createApi({
       providesTags: [CAR_TAG],
     }),
     createCar: builder.mutation({
-      query: (item: Pick<CarItemType, 'color' | 'name'>) => ({
+      query: (car: Partial<CarItemType>) => ({
         url: '/garage',
         method: 'POST',
-        body: item,
+        body: { name: car.name, color: car.color },
         prepareHeaders: (headers: Headers) => {
           headers.set('Content-Type', 'application/json');
           return headers;
