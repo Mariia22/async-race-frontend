@@ -48,6 +48,7 @@ function Pagination({
           }
           return (
             <button
+              key={pageNumber}
               type="button"
               onClick={() => onPageChange(Number(pageNumber))}
               onKeyDown={() => onPageChange(Number(pageNumber))}

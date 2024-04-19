@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import appRouter from './appRouter';
+import { store } from './appStore';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={appRouter()} />
+    <Provider store={store}>
+      <RouterProvider router={appRouter()} />
+    </Provider>
   </React.StrictMode>,
 );

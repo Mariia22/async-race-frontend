@@ -4,4 +4,4 @@ export type RouteType = {
   name: string;
 };
 
-export type IconType = 'car';
+export const CAR_TAG = 'CAR_TAG';
