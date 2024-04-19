@@ -13,4 +13,4 @@ export const routes: RouteType[] = [
   },
 ];
 
-export const carsOnPage = 7;
+export const dots = '...';
