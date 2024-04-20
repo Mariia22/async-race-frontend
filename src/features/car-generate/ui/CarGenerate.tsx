@@ -9,13 +9,11 @@ function CarGenerate() {
   const generateAndCreateCars = useCallback(() => {
     const cars = generateCars();
     cars.forEach(async (car) => createCar(car));
-  }, []);
+  }, [createCar]);
 
   if (isLoading) {
     return <Button name="Loading..." disabled onClick={generateAndCreateCars} />;
-  }
-
-  if (isError) {
+  } if (isError) {
     console.error(error);
     return <div>Error</div>;
   }
