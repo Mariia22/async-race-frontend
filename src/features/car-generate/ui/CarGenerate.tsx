@@ -13,7 +13,8 @@ function CarGenerate() {
 
   if (isLoading) {
     return <Button name="Loading..." disabled onClick={generateAndCreateCars} />;
-  } if (isError) {
+  }
+  if (isError) {
     console.error(error);
     return <div>Error</div>;
   }

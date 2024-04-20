@@ -1,9 +1,6 @@
-import Car from '../../car/ui/Car';
-
 function RaceTrack() {
   return (
     <>
-      <Car />
       <div>Trace</div>
       <div>Finish</div>
     </>

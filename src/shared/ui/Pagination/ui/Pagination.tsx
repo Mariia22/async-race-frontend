@@ -3,7 +3,7 @@ import usePagination from '../model/usePagination';
 
 export type PaginationProps = {
   onPageChange: (page: number) => void;
-  totalCount: number;
+  totalCount: number | undefined;
   siblingCount?: number;
   currentPage: number;
   pageSize: number;

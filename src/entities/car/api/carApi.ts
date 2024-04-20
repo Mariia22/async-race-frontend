@@ -16,6 +16,10 @@ export const carApi = createApi({
           _page: page,
         },
       }),
+      transformResponse: (result: CarItemType[], meta) => {
+        const count = Number(meta?.response?.headers.get('X-Total-Count'));
+        return { result, count };
+      },
       providesTags: [CAR_TAG],
     }),
     getCar: builder.query({
