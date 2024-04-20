@@ -1,5 +1,5 @@
 import ControlRace from '../../../features/race-control/ui/ControlRace';
-import CarForm from '../../../features/car-modification/ui/CarForm';
+import CarForm from '../../../features/car-create-update/ui/CarForm';
 import CarGenerate from '../../../features/car-generate/ui/CarGenerate';
 
 function ControlPanel() {

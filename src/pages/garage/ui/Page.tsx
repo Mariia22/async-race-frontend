@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useState } from 'react';
 import ControlPanel from '../../../widgets/controlPanel/ui/ControlPanel';
 import RaceTrack from '../../../entities/race/ui/RaceTrack';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
@@ -10,30 +10,27 @@ import Car from '../../../entities/car/ui/Car';
 function GaragePage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { data, isFetching, isSuccess } = carApi.useGetAllCarsQuery(currentPage);
+  let content;
 
-  const content = useMemo(() => {
-    let result;
-    if (isFetching) {
-      result = <div>Loading...</div>;
-    }
+  if (isFetching) {
+    content = <div>Loading...</div>;
+  }
 
-    if (!isFetching && data?.count === 0) {
-      result = <div>There are no cars in the garage</div>;
-    }
+  if (!isFetching && data?.count === 0) {
+    content = <div>There are no cars in the garage</div>;
+  }
 
-    if (isSuccess) {
-      result = (
-        <div>
-          {data.result?.map((car: CarItemType) => (
-            <Fragment key={car.id}>
-              <Car key={car.id} id={car.id} name={car.name} color={car.color} />
-            </Fragment>
-          ))}
-        </div>
-      );
-    }
-    return result;
-  }, [isSuccess, isFetching, data]);
+  if (isSuccess) {
+    content = (
+      <div>
+        {data.result?.map((car: CarItemType) => (
+          <Fragment key={car.id}>
+            <Car key={car.id} id={car.id} name={car.name} color={car.color} />
+          </Fragment>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <>
