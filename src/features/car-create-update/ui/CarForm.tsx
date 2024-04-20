@@ -1,3 +1,5 @@
+import { selectedCar } from '../../../entities/car/model/carSlice';
+import { useAppSelector } from '../../../shared/model/hooks';
 import Button from '../../../shared/ui/Button/Button';
 
 type Props = {
@@ -6,6 +8,8 @@ type Props = {
 };
 
 function CarForm({ name, onClick }: Props) {
+  const updatedCar = useAppSelector(selectedCar);
+  console.log(updatedCar);
   return (
     <form>
       <input type="text" placeholder="Car name" />

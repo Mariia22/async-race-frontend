@@ -1,18 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CarsType } from './types';
+import type { RootState } from '../../../app/appStore';
 
 const initialState: CarsType = {
-  cars: [],
+  activeCar: undefined,
 };
 
-const carSlice = createSlice({
-  name: 'cart',
+export const carSlice = createSlice({
+  name: 'car',
   initialState,
   reducers: {
-    generateCars(state) {
-      state.cars.push({ id: 0, name: '', color: '' });
+    selectCar(state, action: PayloadAction<number>) {
+      state.activeCar = action.payload;
     },
   },
 });
 
-export default carSlice;
+export const selectedCar = (state: RootState) => state.car.activeCar;
+export const { selectCar } = carSlice.actions;

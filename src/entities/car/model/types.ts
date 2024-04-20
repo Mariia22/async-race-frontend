@@ -5,5 +5,5 @@ export type CarItemType = {
 };
 
 export type CarsType = {
-  cars: CarItemType[];
+  activeCar: number | undefined;
 };

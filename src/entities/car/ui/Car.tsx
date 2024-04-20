@@ -1,4 +1,5 @@
 import CarDeleteButton from '../../../features/car-delete/ui/CarDeleteButton';
+import CarSelectButton from '../../../features/car-select/ui/CarSelectButton';
 import Button from '../../../shared/ui/Button/Button';
 import CarIcon from '../assets/car.svg?react';
 import { CarItemType } from '../model/types';
@@ -7,7 +8,7 @@ function Car({ id, name, color }: CarItemType) {
   return (
     <>
       <div>
-        <Button name="Select" onClick={() => console.log('create')} />
+        <CarSelectButton id={id} />
         <CarDeleteButton id={id} />
       </div>
       <div>
