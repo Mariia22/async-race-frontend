@@ -5,3 +5,12 @@ export type RouteType = {
 };
 
 export const CAR_TAG = 'CAR_TAG';
+
+export enum StatusCode {
+  OK = 200,
+  Created = 201,
+  BadRequest = 400,
+  NotFound = 404,
+  TooManyRequests = 429,
+  InternalServerError = 500,
+}

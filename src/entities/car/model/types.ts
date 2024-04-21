@@ -7,3 +7,9 @@ export type CarItemType = {
 export type CarsType = {
   activeCar: CarItemType;
 };
+
+export enum EngineStatus {
+  start = 'started',
+  stop = 'stopped',
+  drive = 'drive',
+}

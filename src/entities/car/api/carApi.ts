@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseUrl, limitCarsPerPage } from '../../../shared/lib/const';
 import { CAR_TAG } from '../../../shared/lib/types';
-import { CarItemType } from '../model/types';
+import { CarItemType, EngineStatus } from '../model/types';
 
 export const carApi = createApi({
   tagTypes: [CAR_TAG],
@@ -59,6 +59,24 @@ export const carApi = createApi({
       }),
       invalidatesTags: [CAR_TAG],
     }),
+    startEngine: builder.mutation({
+      query: (id) => ({
+        url: `/engine?id=${id}&status=${EngineStatus.start}`,
+        method: 'PATCH',
+      }),
+    }),
+    stopEngine: builder.mutation({
+      query: (id) => ({
+        url: `/engine?id=${id}&status=${EngineStatus.stop}`,
+        method: 'PATCH',
+      }),
+    }),
+    driveEngine: builder.mutation({
+      query: (id) => ({
+        url: `/engine?id=${id}&status=${EngineStatus.drive}`,
+        method: 'PATCH',
+      }),
+    }),
   }),
 });
 
@@ -68,4 +86,7 @@ export const {
   useCreateCarMutation,
   useUpdateCarMutation,
   useDeleteCarMutation,
+  useStartEngineMutation,
+  useStopEngineMutation,
+  useDriveEngineMutation,
 } = carApi;
