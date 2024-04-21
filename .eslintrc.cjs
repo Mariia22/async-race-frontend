@@ -23,7 +23,7 @@ module.exports = {
       'error',
       {
         props: true,
-        ignorePropertyModificationsFor: ['state'],
+        ignorePropertyModificationsFor: ['state', 'item'],
       },
     ],
   },

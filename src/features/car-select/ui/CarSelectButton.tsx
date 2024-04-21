@@ -10,7 +10,7 @@ function CarSelectButton({ id, name, color }: CarItemType) {
 
   const selectCarHandler = useCallback(() => {
     dispatch(selectCar({ id, name, color }));
-  }, [dispatch, selectCar]);
+  }, [dispatch, selectCar, color, id, name]);
 
   return <Button name="Select" onClick={selectCarHandler} />;
 }

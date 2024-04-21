@@ -13,3 +13,17 @@ export enum EngineStatus {
   stop = 'stopped',
   drive = 'drive',
 }
+
+export type EngineDrive = {
+  success: boolean;
+};
+
+export type EngineResponse = {
+  velocity: number;
+  distance: number;
+};
+
+export type AnimationType = {
+  id: number;
+  animation: number;
+};
