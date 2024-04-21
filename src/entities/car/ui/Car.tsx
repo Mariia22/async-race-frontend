@@ -8,7 +8,7 @@ function Car({ id, name, color }: CarItemType) {
   return (
     <>
       <div>
-        <CarSelectButton id={id} />
+        <CarSelectButton id={id} name={name} color={color} />
         <CarDeleteButton id={id} />
       </div>
       <div>

@@ -9,10 +9,12 @@ import Car from '../../../entities/car/ui/Car';
 
 function GaragePage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { data, isFetching, isSuccess } = carApi.useGetAllCarsQuery(currentPage);
+  const {
+    data, isLoading, isFetching, isSuccess, isError, error,
+  } = carApi.useGetAllCarsQuery(currentPage);
   let content;
 
-  if (isFetching) {
+  if (isLoading) {
     content = <div>Loading...</div>;
   }
 
@@ -30,6 +32,11 @@ function GaragePage() {
         ))}
       </div>
     );
+  }
+
+  if (isError) {
+    console.log(error);
+    content = <div>error</div>;
   }
 
   return (

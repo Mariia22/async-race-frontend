@@ -16,3 +16,5 @@ export const routes: RouteType[] = [
 export const dots = '...';
 export const baseUrl = 'http://127.0.0.1:3000';
 export const limitCarsPerPage = 7;
+export const initialColor = '#ffffff';
+export const initialCar = { name: '', color: initialColor, id: 0 };

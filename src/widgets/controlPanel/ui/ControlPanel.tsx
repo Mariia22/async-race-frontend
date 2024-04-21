@@ -1,15 +1,16 @@
 import ControlRace from '../../../features/race-control/ui/ControlRace';
-import CarForm from '../../../features/car-create-update/ui/CarForm';
 import CarGenerate from '../../../features/car-generate/ui/CarGenerate';
+import CarCreateForm from '../../../features/car-create/ui/CarCreateForm';
+import CarUpdateForm from '../../../features/car-update/ui/CarUpdateForm';
 
 function ControlPanel() {
   return (
-    <div>
+    <>
       <ControlRace />
-      <CarForm name="Create" onClick={() => console.log('create')} />
-      <CarForm name="Update" onClick={() => console.log('update')} />
+      <CarCreateForm />
+      <CarUpdateForm />
       <CarGenerate />
-    </div>
+    </>
   );
 }
 

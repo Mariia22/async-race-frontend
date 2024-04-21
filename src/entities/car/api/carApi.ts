@@ -29,7 +29,7 @@ export const carApi = createApi({
       providesTags: [CAR_TAG],
     }),
     createCar: builder.mutation({
-      query: (car: Partial<CarItemType>) => ({
+      query: (car: CarItemType) => ({
         url: '/garage',
         method: 'POST',
         body: { name: car.name, color: car.color },

@@ -1,17 +1,18 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { CarsType } from './types';
+import { CarsType, CarItemType } from './types';
 import type { RootState } from '../../../app/appStore';
+import { initialCar } from '../../../shared/lib/const';
 
 const initialState: CarsType = {
-  activeCar: undefined,
+  activeCar: initialCar,
 };
 
 export const carSlice = createSlice({
   name: 'car',
   initialState,
   reducers: {
-    selectCar(state, action: PayloadAction<number>) {
-      state.activeCar = action.payload;
+    selectCar(state, action: PayloadAction<CarItemType>) {
+      state.activeCar = { ...action.payload };
     },
   },
 });
