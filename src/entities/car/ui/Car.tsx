@@ -1,13 +1,14 @@
 import { useCallback, useState } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import CarIcon from '../assets/car.svg?react';
+import Button from '../../../shared/ui/Button/Button';
 import CarDeleteButton from '../../../features/car-delete/ui/CarDeleteButton';
 import CarSelectButton from '../../../features/car-select/ui/CarSelectButton';
 import { CarItemType } from '../model/types';
-import { startAnimation, stopAnimation } from '../lib/animation';
 import { carApi } from '../api/carApi';
-import CarIcon from '../assets/car.svg?react';
+import { screenDistance } from '../../../shared/lib/const';
 import { StatusCode } from '../../../shared/lib/types';
-import Button from '../../../shared/ui/Button/Button';
+import useAnimation from '../model/hooks';
 
 function Car({ id, name, color }: CarItemType) {
   const [startEngine] = carApi.useStartEngineMutation();
@@ -15,39 +16,46 @@ function Car({ id, name, color }: CarItemType) {
   const [stopEngine] = carApi.useStopEngineMutation();
   const [translate, setTranslate] = useState<number>(0);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const { startAnimation, cancelAnimation } = useAnimation();
 
   const startEngineHandler = useCallback(() => {
     setIsDisabled(true);
     startEngine(id)
       .unwrap()
       .then((startMode) => {
-        startAnimation(id, Math.min(startMode.distance / startMode.velocity), setTranslate);
+        startAnimation(
+          id,
+          Math.min(startMode.distance / startMode.velocity),
+          setTranslate,
+          screenDistance,
+        );
       });
     driveEngine(id)
       .unwrap()
       .then()
       .catch((error: FetchBaseQueryError) => {
-        console.log(error);
         if (
           error
           && 'originalStatus' in error
           && error.originalStatus === StatusCode.InternalServerError
         ) {
-          stopAnimation(id);
+          cancelAnimation(id);
+        } else {
+          console.error(error);
         }
       })
       .finally(() => setIsDisabled(false));
-  }, [startEngine, driveEngine, id]);
+  }, [startEngine, driveEngine, id, cancelAnimation, startAnimation]);
 
   const stopEngineHandler = useCallback(() => {
     setIsDisabled(false);
     stopEngine(id)
       .unwrap()
-      .then(() => stopAnimation(id))
+      .then(() => cancelAnimation(id))
       .then(() => setTranslate(0))
       .then(() => setIsDisabled(false))
       .catch((error) => console.log(error));
-  }, [stopEngine, id, isDisabled]);
+  }, [stopEngine, id, cancelAnimation]);
 
   return (
     <>
