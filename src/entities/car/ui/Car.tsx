@@ -24,10 +24,8 @@ function Car({ id, name, color }: CarItemType) {
       .unwrap()
       .then((startMode) => {
         startAnimation(id, Math.min(startMode.distance / startMode.velocity), screenDistance);
-      });
-    driveEngine(id)
-      .unwrap()
-      .then()
+      })
+      .then(() => driveEngine(id).unwrap())
       .catch((error: FetchBaseQueryError) => {
         if (
           error

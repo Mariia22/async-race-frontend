@@ -3,7 +3,6 @@ import type { RootState } from '../../../app/appStore';
 import { AnimationType, RaceType } from './types';
 
 const initialState: RaceType = {
-  carsInRace: [],
   animationStack: [],
 };
 
@@ -11,13 +10,6 @@ export const raceSlice = createSlice({
   name: 'race',
   initialState,
   reducers: {
-    // TODO check this code
-    // setCars: (state, action: PayloadAction<CarItemType[]>) => {
-    //   state.carsInRace = action.payload;
-    // },
-    // deleteCars: () => {
-    //   return initialState;
-    // },
     setAnimationStack: (state, action: PayloadAction<AnimationType>) => {
       state.animationStack.push(action.payload);
     },
@@ -58,7 +50,6 @@ export const raceSlice = createSlice({
   },
 });
 
-export const allCarsInRace = (state: RootState) => state.race.carsInRace;
 export const getAllDrivingCars = (state: RootState) => state.race.animationStack;
 export const selectCarById = createSelector(
   getAllDrivingCars,

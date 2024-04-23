@@ -6,7 +6,7 @@ import { dots } from '../../../lib/const';
 type Props = Omit<PaginationProps, 'onPageChange' | 'className'>;
 
 const usePagination = ({
-  totalCount, pageSize, siblingCount = 1, currentPage,
+  totalCount = 0, pageSize, siblingCount = 1, currentPage,
 }: Props) => {
   const paginationRange = useMemo(() => {
     let result: (string | number)[] = [];
