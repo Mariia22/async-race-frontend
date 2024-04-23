@@ -2,17 +2,16 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/appStore';
 import {
-  getAllDrivingCars,
   refreshAnimation,
   refreshCoordinate,
   setAnimationStack,
   stopCar,
+  brokeCar,
 } from '../../entities/race/model/raceSlice';
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAnimation = () => {
-  const animationState = useAppSelector(getAllDrivingCars);
   const dispatch = useAppDispatch();
 
   const startAnimation = (id: number, time: number, screenWidth: number): void => {
@@ -44,20 +43,13 @@ export const useAnimation = () => {
   };
 
   const cancelAnimation = (id: number) => {
-    const el = animationState.find((item) => item.id === id);
-    if (el) {
-      window.cancelAnimationFrame(el.animation);
-    }
+    dispatch(brokeCar(id));
+  };
+
+  const stopAnimationAndReturnToStart = (id: number) => {
+    cancelAnimation(id);
     dispatch(stopCar(id));
   };
 
-  const brokeCar = (id: number) => {
-    console.log('broke');
-    const el = animationState.find((item) => item.id === id);
-    if (el) {
-      window.cancelAnimationFrame(el.animation);
-    }
-  };
-
-  return { startAnimation, cancelAnimation, brokeCar };
+  return { startAnimation, cancelAnimation, stopAnimationAndReturnToStart };
 };

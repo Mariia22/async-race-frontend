@@ -17,7 +17,7 @@ function Car({ id, name, color }: CarItemType) {
   const [driveEngine] = carApi.useDriveEngineMutation();
   const [stopEngine] = carApi.useStopEngineMutation();
   const carInMotion: AnimationType = useAppSelector((state) => selectCarById(state, id));
-  const { startAnimation, cancelAnimation, brokeCar } = useAnimation();
+  const { startAnimation, cancelAnimation, stopAnimationAndReturnToStart } = useAnimation();
 
   const startEngineHandler = useCallback(() => {
     startEngine(id)
@@ -34,19 +34,19 @@ function Car({ id, name, color }: CarItemType) {
           && 'originalStatus' in error
           && error.originalStatus === StatusCode.InternalServerError
         ) {
-          brokeCar(id);
+          cancelAnimation(id);
         } else {
           console.error(error);
         }
       });
-  }, [startEngine, driveEngine, id, startAnimation, brokeCar]);
+  }, [startEngine, driveEngine, id, startAnimation, cancelAnimation]);
 
   const stopEngineHandler = useCallback(() => {
     stopEngine(id)
       .unwrap()
-      .then(() => cancelAnimation(id))
+      .then(() => stopAnimationAndReturnToStart(id))
       .catch((error) => console.log(error));
-  }, [stopEngine, id, cancelAnimation]);
+  }, [stopEngine, id, stopAnimationAndReturnToStart]);
 
   return (
     <>

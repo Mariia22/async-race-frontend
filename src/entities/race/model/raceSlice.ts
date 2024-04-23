@@ -49,6 +49,12 @@ export const raceSlice = createSlice({
       );
     },
     stopRace: () => initialState,
+    brokeCar: (state, action: PayloadAction<number>) => {
+      const brokenCar = state.animationStack.find((item) => item.id === action.payload);
+      if (brokenCar) {
+        window.cancelAnimationFrame(brokenCar.animation);
+      }
+    },
   },
 });
 
@@ -61,5 +67,10 @@ export const selectCarById = createSelector(
 );
 
 export const {
-  setAnimationStack, refreshAnimation, refreshCoordinate, stopCar, stopRace,
+  setAnimationStack,
+  refreshAnimation,
+  refreshCoordinate,
+  brokeCar,
+  stopCar,
+  stopRace,
 } = raceSlice.actions;
