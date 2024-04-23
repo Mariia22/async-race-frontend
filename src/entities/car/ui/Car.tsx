@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import CarIcon from '../assets/car.svg?react';
 import Button from '../../../shared/ui/Button/Button';
@@ -9,26 +9,22 @@ import { carApi } from '../api/carApi';
 import { screenDistance } from '../../../shared/lib/const';
 import { StatusCode } from '../../../shared/lib/types';
 import useAnimation from '../model/hooks';
+import { useAppSelector } from '../../../shared/model/hooks';
+import { selectCarById } from '../../race/model/raceSlice';
+import { AnimationType } from '../../race/model/types';
 
 function Car({ id, name, color }: CarItemType) {
   const [startEngine] = carApi.useStartEngineMutation();
   const [driveEngine] = carApi.useDriveEngineMutation();
   const [stopEngine] = carApi.useStopEngineMutation();
-  const [translate, setTranslate] = useState<number>(0);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const { startAnimation, cancelAnimation } = useAnimation();
+  const carInMotion: AnimationType = useAppSelector((state) => selectCarById(state, id));
+  const { startAnimation, cancelAnimation, brokeCar } = useAnimation();
 
   const startEngineHandler = useCallback(() => {
-    setIsDisabled(true);
     startEngine(id)
       .unwrap()
       .then((startMode) => {
-        startAnimation(
-          id,
-          Math.min(startMode.distance / startMode.velocity),
-          setTranslate,
-          screenDistance,
-        );
+        startAnimation(id, Math.min(startMode.distance / startMode.velocity), screenDistance);
       });
     driveEngine(id)
       .unwrap()
@@ -39,21 +35,17 @@ function Car({ id, name, color }: CarItemType) {
           && 'originalStatus' in error
           && error.originalStatus === StatusCode.InternalServerError
         ) {
-          cancelAnimation(id);
+          brokeCar(id);
         } else {
           console.error(error);
         }
-      })
-      .finally(() => setIsDisabled(false));
-  }, [startEngine, driveEngine, id, cancelAnimation, startAnimation]);
+      });
+  }, [startEngine, driveEngine, id, cancelAnimation, startAnimation, brokeCar]);
 
   const stopEngineHandler = useCallback(() => {
-    setIsDisabled(false);
     stopEngine(id)
       .unwrap()
       .then(() => cancelAnimation(id))
-      .then(() => setTranslate(0))
-      .then(() => setIsDisabled(false))
       .catch((error) => console.log(error));
   }, [stopEngine, id, cancelAnimation]);
 
@@ -64,10 +56,14 @@ function Car({ id, name, color }: CarItemType) {
         <CarDeleteButton id={id} />
       </div>
       <div>
-        <Button name="Start" disabled={isDisabled} onClick={startEngineHandler} />
-        <Button name="Stop" disabled={!isDisabled} onClick={stopEngineHandler} />
+        <Button
+          name="Start"
+          disabled={carInMotion?.isDriving || false}
+          onClick={startEngineHandler}
+        />
+        <Button name="Stop" disabled={carInMotion?.isStop || false} onClick={stopEngineHandler} />
       </div>
-      <div style={{ transform: `translateX(${translate}px)` }}>
+      <div style={{ transform: `translateX(${carInMotion?.coordinate || 0}px)` }}>
         <CarIcon fill={color} />
       </div>
       <p>{name}</p>

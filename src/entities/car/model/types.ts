@@ -22,8 +22,3 @@ export type EngineResponse = {
   velocity: number;
   distance: number;
 };
-
-export type AnimationType = {
-  id: number;
-  animation: number;
-};

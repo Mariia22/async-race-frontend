@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react';
 import ControlPanel from '../../../widgets/controlPanel/ui/ControlPanel';
-import RaceTrack from '../../../entities/race/ui/RaceTrack';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
 import { limitCarsPerPage, routes } from '../../../shared/lib/const';
 import { carApi } from '../../../entities/car/api/carApi';
@@ -52,7 +51,6 @@ function GaragePage() {
         {currentPage}
       </h2>
       <ControlPanel />
-      <RaceTrack />
       {content}
       <Pagination
         currentPage={currentPage}

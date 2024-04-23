@@ -1,34 +1,42 @@
-import { Dispatch, SetStateAction } from 'react';
-import { AnimationType } from './types';
+import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
+import {
+  getAllDrivingCars,
+  refreshAnimation,
+  refreshCoordinate,
+  setAnimationStack,
+  stopCar,
+} from '../../race/model/raceSlice';
 
 const useAnimation = () => {
-  let animationState: AnimationType[] = [];
+  const animationState = useAppSelector(getAllDrivingCars);
+  const dispatch = useAppDispatch();
 
-  const startAnimation = (
-    id: number,
-    time: number,
-    callback: Dispatch<SetStateAction<number>>,
-    screenWidth: number,
-  ): void => {
+  const startAnimation = (id: number, time: number, screenWidth: number): void => {
     let start: null | number = null;
 
     const move = (timestamp: number): void => {
       if (!start) start = timestamp;
       const progress: number = timestamp - start;
       const passed: number = Math.round(progress * (screenWidth / time));
-      callback(Math.min(screenWidth, passed));
+      dispatch(refreshCoordinate({ id, coordinate: Math.min(screenWidth, passed) }));
       if (passed < screenWidth) {
-        animationState = [
-          ...animationState.map((item) => {
-            if (item.id === id) {
-              item.animation = window.requestAnimationFrame(move);
-            }
-            return item;
+        dispatch(
+          refreshAnimation({
+            id,
+            animation: window.requestAnimationFrame(move),
           }),
-        ];
+        );
       }
     };
-    animationState.push({ id, animation: window.requestAnimationFrame(move) });
+    dispatch(
+      setAnimationStack({
+        id,
+        animation: window.requestAnimationFrame(move),
+        coordinate: 0,
+        isDriving: true,
+        isStop: false,
+      }),
+    );
   };
 
   const cancelAnimation = (id: number) => {
@@ -36,10 +44,18 @@ const useAnimation = () => {
     if (el) {
       window.cancelAnimationFrame(el.animation);
     }
-    animationState = [...animationState.filter((item) => item.id !== id)];
+    dispatch(stopCar(id));
   };
 
-  return { startAnimation, cancelAnimation };
+  const brokeCar = (id: number) => {
+    console.log('broke');
+    const el = animationState.find((item) => item.id === id);
+    if (el) {
+      window.cancelAnimationFrame(el.animation);
+    }
+  };
+
+  return { startAnimation, cancelAnimation, brokeCar };
 };
 
 export default useAnimation;
