@@ -8,8 +8,7 @@ import { CarItemType } from '../model/types';
 import { carApi } from '../api/carApi';
 import { screenDistance } from '../../../shared/lib/const';
 import { StatusCode } from '../../../shared/lib/types';
-import useAnimation from '../model/hooks';
-import { useAppSelector } from '../../../shared/model/hooks';
+import { useAnimation, useAppSelector } from '../../../shared/model/hooks';
 import { selectCarById } from '../../race/model/raceSlice';
 import { AnimationType } from '../../race/model/types';
 
@@ -40,7 +39,7 @@ function Car({ id, name, color }: CarItemType) {
           console.error(error);
         }
       });
-  }, [startEngine, driveEngine, id, cancelAnimation, startAnimation, brokeCar]);
+  }, [startEngine, driveEngine, id, startAnimation, brokeCar]);
 
   const stopEngineHandler = useCallback(() => {
     stopEngine(id)

@@ -11,7 +11,7 @@ export const raceSlice = createSlice({
   name: 'race',
   initialState,
   reducers: {
-    // TODO check the nesserity of this code
+    // TODO check this code
     // setCars: (state, action: PayloadAction<CarItemType[]>) => {
     //   state.carsInRace = action.payload;
     // },

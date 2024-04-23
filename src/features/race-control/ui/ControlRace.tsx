@@ -7,6 +7,7 @@ import Button from '../../../shared/ui/Button/Button';
 function ControlRace() {
   const dispatch = useAppDispatch();
   const [stopEngine] = carApi.useStopEngineMutation();
+  // TODO: add current page from redux
   const { data } = carApi.useGetAllCarsQuery(1);
 
   const resetHandler = useCallback(() => {
@@ -14,11 +15,11 @@ function ControlRace() {
     data?.result?.forEach((car) => {
       stopEngine(car.id);
     });
-  }, []);
+  }, [data?.result, dispatch, stopEngine]);
 
   const raceHandler = useCallback(() => {
     dispatch(stopRace());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
