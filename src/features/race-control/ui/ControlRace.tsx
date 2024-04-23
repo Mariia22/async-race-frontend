@@ -33,7 +33,7 @@ function ControlRace() {
         data?.result,
       );
     }
-  }, [data?.result, dispatch, raceAll, startRace]);
+  }, [data?.result, raceAll, startRace]);
 
   return (
     <div>

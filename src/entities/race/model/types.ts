@@ -1,5 +1,3 @@
-import { CarItemType } from '../../car/model/types';
-
 export type AnimationType = {
   id: number;
   coordinate: number;
@@ -17,13 +15,4 @@ export type RacePossibleWinner = {
   success?: boolean | undefined;
   velocity?: number | undefined;
   distance?: number | undefined;
-};
-
-export type Winner = {
-  id: number;
-  wins: number;
-  time: number;
-  name?: string;
-  color?: string;
-  car: CarItemType;
 };
