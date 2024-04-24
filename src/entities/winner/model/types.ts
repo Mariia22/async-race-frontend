@@ -9,3 +9,14 @@ export type Winner = {
 export type WinnerType = {
   winners: Winner[];
 };
+
+export enum Sort {
+  id = 'id',
+  wins = 'wins',
+  time = 'time',
+}
+
+export enum Order {
+  ASC = 'asc',
+  DESC = 'desc',
+}

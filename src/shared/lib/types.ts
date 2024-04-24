@@ -5,6 +5,7 @@ export type RouteType = {
 };
 
 export const CAR_TAG = 'CAR_TAG';
+export const WINNER_TAG = 'WINNER_TAG';
 
 export enum StatusCode {
   OK = 200,
