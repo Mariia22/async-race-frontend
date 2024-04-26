@@ -3,10 +3,14 @@ import CarGenerate from '../../../features/car-generate/ui/CarGenerate';
 import CarCreateForm from '../../../features/car-create/ui/CarCreateForm';
 import CarUpdateForm from '../../../features/car-update/ui/CarUpdateForm';
 
-function ControlPanel() {
+type Props = {
+  currentPage: number;
+};
+
+function ControlPanel({ currentPage }: Props) {
   return (
     <>
-      <ControlRace />
+      <ControlRace currentPage={currentPage} />
       <CarCreateForm />
       <CarUpdateForm />
       <CarGenerate />

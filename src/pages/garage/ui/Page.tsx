@@ -50,7 +50,7 @@ function GaragePage() {
         Page #
         {currentPage}
       </h2>
-      <ControlPanel />
+      <ControlPanel currentPage={currentPage} />
       {content}
       <Pagination
         currentPage={currentPage}

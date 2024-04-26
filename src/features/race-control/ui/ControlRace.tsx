@@ -6,13 +6,16 @@ import Button from '../../../shared/ui/Button/Button';
 import useRace from '../model/hooks';
 import { CarItemType } from '../../../entities/car/model/types';
 
-function ControlRace() {
+type Props = {
+  currentPage: number;
+};
+
+function ControlRace({ currentPage }: Props) {
   const dispatch = useAppDispatch();
   const [stopEngine] = carApi.useStopEngineMutation();
   const { raceAll, startRace } = useRace();
   const [raceIsStarted, setRaceStart] = useState<boolean>(false);
-  // TODO: add current page from redux
-  const { data } = carApi.useGetAllCarsQuery(1);
+  const { data } = carApi.useGetAllCarsQuery(currentPage);
 
   const resetHandler = useCallback(() => {
     setRaceStart(false);
