@@ -24,7 +24,7 @@ export const carApi = createApi({
       },
       providesTags: [CAR_TAG],
     }),
-    getCar: builder.query({
+    getCar: builder.query<CarItemType, number>({
       query: (id: number) => ({
         url: `/garage/${id}`,
       }),

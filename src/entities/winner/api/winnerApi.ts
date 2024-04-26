@@ -1,31 +1,79 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { WINNER_TAG } from '../../../shared/lib/types';
-import { baseUrl, limitWinnersPerPage } from '../../../shared/lib/const';
+import { baseUrl } from '../../../shared/lib/const';
 import { Order, Sort, Winner } from '../model/types';
+import { CarItemType } from '../../car/model/types';
 
-const winnerApi = createApi({
+type QueryProps = {
+  page: number;
+  limit: number;
+  sort?: Sort | null;
+  order?: Order | null;
+};
+
+type QueryResponse = {
+  result: Winner[];
+  count: number;
+};
+export const winnerApi = createApi({
   tagTypes: [WINNER_TAG],
   reducerPath: 'winnerApi',
   baseQuery: fetchBaseQuery({ baseUrl }),
   endpoints: (builder) => ({
-    getAllWinners: builder.query({
-      query: (
-        page: number = 1,
-        limit: number = limitWinnersPerPage,
-        sort: Sort | null = null,
-        order: Order | null = null,
-      ) => ({
-        url: '/winners',
-        params: {
-          _limit: limit,
-          _page: page,
-          _sort: sort,
-          _order: order,
-        },
-      }),
-      transformResponse: (result: Partial<Winner>[], meta) => {
-        const count = Number(meta?.response?.headers.get('X-Total-Count'));
-        return { result, count };
+    getAllWinners: builder.query<QueryResponse, QueryProps>({
+      async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {
+        const {
+          page, limit, sort, order,
+        } = _arg;
+        const responseWinners = await fetchWithBQ({
+          url: '/winners',
+          params: {
+            page,
+            _limit: limit,
+            _sort: sort,
+            _order: order,
+          },
+        });
+        if (responseWinners.error) return { error: responseWinners.error };
+        const winners = responseWinners.data as Omit<Winner, 'name' | 'color'>[];
+        const cars: CarItemType[] = [];
+        const promises = [];
+        const getCarsById = async (id: number) => {
+          const response = await fetchWithBQ({
+            url: `/garage/${winners[id].id}`,
+          });
+          const car = response.data as CarItemType;
+          if (car) {
+            cars.push(car);
+          }
+        };
+
+        for (let i = 0; i < winners.length; i += 1) {
+          promises.push(getCarsById(i));
+        }
+        await Promise.all(promises);
+        const result = cars.map((item) => {
+          const { id, name, color } = item;
+          const { wins, time } = winners.reduce(
+            (acc, data) => {
+              if (data.id === id) {
+                acc.wins += data.wins;
+                acc.time += data.time;
+              }
+              return acc;
+            },
+            { wins: 0, time: 0 },
+          );
+          return {
+            id,
+            name,
+            color,
+            wins,
+            time,
+          };
+        });
+        const count = Number(responseWinners?.meta?.response?.headers.get('X-Total-Count'));
+        return { data: { result, count } };
       },
       providesTags: [WINNER_TAG],
     }),
@@ -68,4 +116,10 @@ const winnerApi = createApi({
     }),
   }),
 });
-export default winnerApi;
+export const {
+  useGetAllWinnersQuery,
+  useGetWinnerQuery,
+  useUpdateWinnerMutation,
+  useDeleteWinnerMutation,
+  useCreateWinnerMutation,
+} = winnerApi;

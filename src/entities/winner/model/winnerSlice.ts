@@ -9,7 +9,11 @@ const initialState: WinnerType = {
 export const winnerSlice = createSlice({
   name: 'winner',
   initialState,
-  reducers: {},
+  reducers: {
+    setWinners: (state, action) => {
+      state.winners = action.payload;
+    },
+  },
 });
 export const selectedAllWinners = (state: RootState) => state.winner.winners;
-// export const { selectCar } = carSlice.actions;
+export const { setWinners } = winnerSlice.actions;
