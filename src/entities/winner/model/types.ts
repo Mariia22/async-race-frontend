@@ -1,3 +1,9 @@
+export type WinnerDTO = {
+  id: number;
+  wins: number;
+  time: number;
+};
+
 export type Winner = {
   id: number;
   wins: number;

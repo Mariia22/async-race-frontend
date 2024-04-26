@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { WINNER_TAG } from '../../../shared/lib/types';
 import { baseUrl } from '../../../shared/lib/const';
-import { Order, Sort, Winner } from '../model/types';
+import {
+  Order, Sort, Winner, WinnerDTO,
+} from '../model/types';
 import { CarItemType } from '../../car/model/types';
 
 type QueryProps = {
@@ -77,14 +79,14 @@ export const winnerApi = createApi({
       },
       providesTags: [WINNER_TAG],
     }),
-    getWinner: builder.query({
+    getWinner: builder.query<WinnerDTO, number>({
       query: (id: number) => ({
         url: `/winners/${id}`,
       }),
       providesTags: [WINNER_TAG],
     }),
     createWinner: builder.mutation({
-      query: (winner: Partial<Winner>) => ({
+      query: (winner: WinnerDTO) => ({
         url: '/winners',
         method: 'POST',
         body: { id: winner.id, wins: winner.wins, time: winner.time },
@@ -96,7 +98,7 @@ export const winnerApi = createApi({
       invalidatesTags: [WINNER_TAG],
     }),
     updateWinner: builder.mutation({
-      query: (item: Partial<Winner>) => ({
+      query: (item: WinnerDTO) => ({
         url: `/winners/${item.id}`,
         method: 'PUT',
         body: { wins: item.wins, time: item.time },

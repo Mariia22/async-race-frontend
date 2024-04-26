@@ -4,6 +4,7 @@ import { stopRace } from '../../../entities/race/model/raceSlice';
 import { useAppDispatch } from '../../../shared/model/hooks';
 import Button from '../../../shared/ui/Button/Button';
 import useRace from '../model/hooks';
+import { CarItemType } from '../../../entities/car/model/types';
 
 function ControlRace() {
   const dispatch = useAppDispatch();
@@ -25,12 +26,20 @@ function ControlRace() {
 
   const raceHandler = useCallback(async () => {
     setRaceStart(true);
-    const promises = data?.result.forEach((car) => startRace(car.id));
-    if (promises && data?.result) {
+    const cars = data?.result;
+    if (cars) {
+      const promises = [];
+      const addPromise = async (car: CarItemType) => {
+        const promise = await startRace(car.id);
+        return promise;
+      };
+      for (let i = 0; i < cars.length; i += 1) {
+        promises.push(addPromise(cars[i]));
+      }
       await raceAll(
         promises,
-        data?.result.map((item) => item.id),
-        data?.result,
+        cars.map((item) => item.id),
+        cars,
       );
     }
   }, [data?.result, raceAll, startRace]);

@@ -6,9 +6,11 @@ import { useAnimation } from '../../../shared/model/hooks';
 // TODO: add screenDistance
 import { screenDistance } from '../../../shared/lib/const';
 import { CarItemType } from '../../../entities/car/model/types';
+import useUpdateWinner from '../../winner-create-or-update/model/hooks';
 
 const useRace = () => {
   const { startAnimation, cancelAnimation } = useAnimation();
+  const { createUpdateWinner } = useUpdateWinner();
   const [startEngine] = carApi.useStartEngineMutation();
   const [driveEngine] = carApi.useDriveEngineMutation();
 
@@ -30,7 +32,7 @@ const useRace = () => {
     }
     if (result.distance && result.velocity) {
       const time = Number((result.distance / result.velocity / 1000).toFixed(2));
-      // TODO: add winner to redux this.updateWinnersTable(result, time);
+      await createUpdateWinner(result, time);
       const winnerCar = cars?.find((car) => car.id === result.id);
       return { winnerCar, time };
     }
