@@ -5,6 +5,9 @@ import { useAppDispatch } from '../../../shared/model/hooks';
 import Button from '../../../shared/ui/Button/Button';
 import useRace from '../model/hooks';
 import { CarItemType } from '../../../entities/car/model/types';
+import Portal from '../../../shared/ui/Portal/ui/Portal';
+import { RaceResult } from '../../../entities/race/model/types';
+import { messages } from '../../../shared/lib/const';
 
 type Props = {
   currentPage: number;
@@ -16,6 +19,8 @@ function ControlRace({ currentPage }: Props) {
   const { raceAll, startRace } = useRace();
   const [raceIsStarted, setRaceStart] = useState<boolean>(false);
   const { data } = carApi.useGetAllCarsQuery(currentPage);
+  const [isModalOpen, setOpenModal] = useState<boolean>(false);
+  const [winner, setWinner] = useState<RaceResult | null>(null);
 
   const resetHandler = useCallback(() => {
     setRaceStart(false);
@@ -39,11 +44,15 @@ function ControlRace({ currentPage }: Props) {
       for (let i = 0; i < cars.length; i += 1) {
         promises.push(addPromise(cars[i]));
       }
-      await raceAll(
+      const result = await raceAll(
         promises,
         cars.map((item) => item.id),
         cars,
       );
+      if (result) {
+        setWinner(result);
+      }
+      setOpenModal(true);
     }
   }, [data?.result, raceAll, startRace]);
 
@@ -51,6 +60,22 @@ function ControlRace({ currentPage }: Props) {
     <div>
       <Button name="Race" disabled={raceIsStarted} onClick={raceHandler} />
       <Button name="Reset" disabled={!raceIsStarted} onClick={resetHandler} />
+      {isModalOpen && (
+        <Portal closePortal={() => setOpenModal(false)}>
+          {winner ? (
+            <div>
+              Winner:
+              {' '}
+              {winner.winnerCar.name}
+              Time:
+              {' '}
+              {winner.time}
+            </div>
+          ) : (
+            <p>{messages.raceError}</p>
+          )}
+        </Portal>
+      )}
     </div>
   );
 }
