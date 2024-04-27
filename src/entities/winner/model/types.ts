@@ -13,7 +13,7 @@ export type Winner = {
 };
 
 export type WinnerType = {
-  winners: Winner[];
+  currentWinnerPage: number;
 };
 
 export enum Sort {

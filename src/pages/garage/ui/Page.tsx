@@ -5,9 +5,12 @@ import { distanceAfterFlag, limitCarsPerPage, routes } from '../../../shared/lib
 import { carApi } from '../../../entities/car/api/carApi';
 import { CarItemType } from '../../../entities/car/model/types';
 import Car from '../../../entities/car/ui/Car';
+import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
+import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 
 function GaragePage() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const currentPage = useAppSelector(selectedCurrentCarPage);
+  const dispatch = useAppDispatch();
   const [width, setWidth] = useState(window.innerWidth - distanceAfterFlag);
   const {
     data, isLoading, isFetching, isSuccess, isError, error,
@@ -69,7 +72,7 @@ function GaragePage() {
         currentPage={currentPage}
         totalCount={data?.count}
         pageSize={limitCarsPerPage}
-        onPageChange={(page) => setCurrentPage(page)}
+        onPageChange={(page) => dispatch(setCarCurrentPage(page))}
       />
     </>
   );

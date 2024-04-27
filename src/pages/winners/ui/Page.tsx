@@ -1,14 +1,19 @@
-import { useState } from 'react';
 import { limitWinnersPerPage, routes } from '../../../shared/lib/const';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
 import { Winner } from '../../../entities/winner/model/types';
 import CarIcon from '../../../entities/car/assets/car.svg?react';
+import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
+import {
+  selectedCurrentWinnerPage,
+  setWinnerCurrentPage,
+} from '../../../entities/winner/model/winnerSlice';
 
 function WinnersPage() {
   let content;
   let notification;
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const currentPage = useAppSelector(selectedCurrentWinnerPage);
+  const dispatch = useAppDispatch();
   const {
     data, isLoading, isFetching, isSuccess, isError, error,
   } = winnerApi.useGetAllWinnersQuery({
@@ -74,7 +79,7 @@ function WinnersPage() {
         currentPage={currentPage}
         totalCount={2}
         pageSize={limitWinnersPerPage}
-        onPageChange={(page) => setCurrentPage(page)}
+        onPageChange={(page) => dispatch(setWinnerCurrentPage(page))}
       />
     </>
   );

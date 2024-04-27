@@ -6,6 +6,7 @@ export type CarItemType = {
 
 export type CarsType = {
   activeCar: CarItemType;
+  currentCarPage: number;
 };
 
 export enum EngineStatus {

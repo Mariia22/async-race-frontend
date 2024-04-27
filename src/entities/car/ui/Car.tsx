@@ -42,7 +42,7 @@ function Car({ car, screenSize }: Props) {
           console.error(error);
         }
       });
-  }, [startEngine, driveEngine, id, startAnimation, cancelAnimation]);
+  }, [startEngine, driveEngine, id, startAnimation, cancelAnimation, screenSize]);
 
   const stopEngineHandler = useCallback(() => {
     stopEngine(id)

@@ -55,7 +55,7 @@ function ControlRace({ currentPage, screenSize }: Props) {
       }
       setOpenModal(true);
     }
-  }, [data?.result, raceAll, startRace]);
+  }, [data?.result, raceAll, startRace, screenSize]);
 
   return (
     <div>
