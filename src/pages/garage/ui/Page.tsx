@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import ControlPanel from '../../../widgets/controlPanel/ui/ControlPanel';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
-import { distanceAfterFlag, limitCarsPerPage, routes } from '../../../shared/lib/const';
+import {
+  distanceAfterFlag,
+  distanceBeforeStart,
+  limitCarsPerPage,
+  routes,
+} from '../../../shared/lib/const';
 import { carApi } from '../../../entities/car/api/carApi';
 import { CarItemType } from '../../../entities/car/model/types';
 import Car from '../../../entities/car/ui/Car';
@@ -12,15 +17,16 @@ import styles from './style.module.scss';
 function GaragePage() {
   const currentPage = useAppSelector(selectedCurrentCarPage);
   const dispatch = useAppDispatch();
-  const [width, setWidth] = useState(window.innerWidth - distanceAfterFlag);
+  const [width, setWidth] = useState(window.innerWidth - distanceAfterFlag - distanceBeforeStart);
   const {
     data, isLoading, isFetching, isSuccess, isError, error,
   } = carApi.useGetAllCarsQuery(currentPage);
   let content;
+  console.log(width);
 
   useEffect(() => {
     const handleResize = () => {
-      setWidth(window.innerWidth - distanceAfterFlag);
+      setWidth(window.innerWidth - distanceAfterFlag - distanceBeforeStart);
     };
 
     window.addEventListener('resize', handleResize);

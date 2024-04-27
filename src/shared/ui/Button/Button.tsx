@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './style.module.scss';
 
 type Props = {
-  key?: string | number;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   name: string | number;
@@ -10,11 +9,10 @@ type Props = {
 };
 
 function Button({
-  onClick, disabled, isFormSubmit, name, key,
+  onClick, disabled, isFormSubmit, name,
 }: Props) {
   return (
     <button
-      key={key}
       type={isFormSubmit ? 'submit' : 'button'}
       disabled={disabled}
       onClick={onClick}
@@ -26,7 +24,6 @@ function Button({
 }
 
 Button.defaultProps = {
-  key: Button.name,
   isFormSubmit: false,
   disabled: false,
 };

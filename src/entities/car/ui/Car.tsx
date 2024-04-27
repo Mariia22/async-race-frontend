@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import CarIcon from '../assets/car.svg?react';
 import Button from '../../../shared/ui/Button/Button';
@@ -53,12 +53,11 @@ function Car({ car, screenSize, totalCount }: Props) {
       .catch((error) => console.log(error));
   }, [stopEngine, id, stopAnimationAndReturnToStart]);
 
-  useEffect(() => {
-    if (carInMotion) {
-      return () => stopEngineHandler();
-    }
-    return () => {};
-  }, [carInMotion]);
+  // useEffect(() => {
+  //   if (carInMotion) {
+  //     return () => stopEngineHandler();
+  //   }
+  // }, [carInMotion]);
 
   return (
     <section className={styles.car}>

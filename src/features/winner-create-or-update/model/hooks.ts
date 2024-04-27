@@ -1,5 +1,5 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { RacePossibleWinner } from '../../../entities/race/model/types';
+import { RaceWinner } from '../../../entities/race/model/types';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
 import { WinnerDTO } from '../../../entities/winner/model/types';
 import { StatusCode } from '../../../shared/lib/types';
@@ -9,7 +9,7 @@ const useUpdateWinner = () => {
   const [updateWinner] = winnerApi.useUpdateWinnerMutation();
   const [getWinner] = winnerApi.useLazyGetWinnerQuery();
 
-  function createUpdateWinner(result: RacePossibleWinner, time: number) {
+  function createUpdateWinner(result: RaceWinner, time: number) {
     getWinner(result.id)
       .unwrap()
       .then((data: WinnerDTO) => {
