@@ -83,7 +83,6 @@ export const winnerApi = createApi({
       query: (id: number) => ({
         url: `/winners/${id}`,
       }),
-      providesTags: [WINNER_TAG],
     }),
     createWinner: builder.mutation({
       query: (winner: WinnerDTO) => ({

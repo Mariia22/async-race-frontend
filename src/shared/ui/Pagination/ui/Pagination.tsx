@@ -37,8 +37,8 @@ function Pagination({
 
   // const lastPage = paginationRange && paginationRange[paginationRange.length - 1];
   return (
-    <div>
-      <button type="button" onClick={onPrevious} onKeyDown={onPrevious}>
+    <div key="left">
+      <button type="button" onClick={onPrevious} onKeyDown={onPrevious} key="left">
         Left
       </button>
       {paginationRange
