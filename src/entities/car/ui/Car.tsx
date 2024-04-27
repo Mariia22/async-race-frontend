@@ -10,6 +10,7 @@ import { StatusCode } from '../../../shared/lib/types';
 import { useAnimation, useAppSelector } from '../../../shared/model/hooks';
 import { selectCarById } from '../../race/model/raceSlice';
 import { AnimationType } from '../../race/model/types';
+import styles from './style.module.scss';
 
 type Props = {
   car: CarItemType;
@@ -52,27 +53,28 @@ function Car({ car, screenSize, totalCount }: Props) {
       .catch((error) => console.log(error));
   }, [stopEngine, id, stopAnimationAndReturnToStart]);
 
-  useEffect(() => () => stopEngineHandler(), []);
+  useEffect(() => {
+    if (carInMotion) {
+      return () => stopEngineHandler();
+    }
+    return () => {};
+  }, [carInMotion]);
 
   return (
-    <>
-      <div>
+    <section className={styles.car}>
+      <p className={styles.carName}>{name}</p>
+      <div className={styles.carEditButtons}>
         <CarSelectButton id={id} name={name} color={color} />
         <CarDeleteButton id={id} totalCount={totalCount} />
       </div>
-      <div>
-        <Button
-          name="Start"
-          disabled={carInMotion?.isDriving || false}
-          onClick={startEngineHandler}
-        />
-        <Button name="Stop" disabled={carInMotion?.isStop || false} onClick={stopEngineHandler} />
+      <div className={styles.carRaceButtons}>
+        <Button name="A" disabled={carInMotion?.isDriving || false} onClick={startEngineHandler} />
+        <Button name="B" disabled={carInMotion?.isStop || false} onClick={stopEngineHandler} />
       </div>
       <div style={{ transform: `translateX(${carInMotion?.coordinate || 0}px)` }}>
         <CarIcon fill={color} />
       </div>
-      <p>{name}</p>
-    </>
+    </section>
   );
 }
 export default Car;

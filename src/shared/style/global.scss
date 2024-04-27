@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Jersey';
+  src: url('../../../public/font/Jersey15-Regular.ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+html,
+body {
+  font:
+    14px/1.4 'Jersey',
+    sans-serif;
+  color: black;
+  background: white;
+  margin: 0.5rem;
+}
+
+h1 {
+  font:
+    24px/1.4 'Jersey',
+    sans-serif;
+}
+
+h2 {
+  font:
+    18px/1.4 'Jersey',
+    sans-serif;
+}

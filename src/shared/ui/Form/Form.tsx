@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import { initialColor } from '../../lib/const';
+import styles from './style.module.scss';
 
 type Props = {
   name: string;
@@ -31,7 +32,7 @@ function Form({ name, clickHandler, initialState }: Props) {
   }
 
   return (
-    <form>
+    <form className={styles.carForm}>
       <input
         name="carName"
         type="text"

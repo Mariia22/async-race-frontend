@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ControlPanel from '../../../widgets/controlPanel/ui/ControlPanel';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
 import { distanceAfterFlag, limitCarsPerPage, routes } from '../../../shared/lib/const';
@@ -7,6 +7,7 @@ import { CarItemType } from '../../../entities/car/model/types';
 import Car from '../../../entities/car/ui/Car';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
+import styles from './style.module.scss';
 
 function GaragePage() {
   const currentPage = useAppSelector(selectedCurrentCarPage);
@@ -39,11 +40,11 @@ function GaragePage() {
 
   if (isSuccess) {
     content = (
-      <div>
+      <div className={styles.garageCars}>
         {data.result?.map((car: CarItemType) => (
-          <Fragment key={car.id}>
+          <div key={car.id}>
             <Car key={car.id} car={car} screenSize={width} totalCount={Number(data?.count)} />
-          </Fragment>
+          </div>
         ))}
       </div>
     );
@@ -55,7 +56,7 @@ function GaragePage() {
   }
 
   return (
-    <>
+    <section className={styles.garage}>
       <h1>
         {routes[0].name}
         (
@@ -74,7 +75,7 @@ function GaragePage() {
         pageSize={limitCarsPerPage}
         onPageChange={(page) => dispatch(setCarCurrentPage(page))}
       />
-    </>
+    </section>
   );
 }
 export default GaragePage;

@@ -8,6 +8,7 @@ import { CarItemType } from '../../../entities/car/model/types';
 import Portal from '../../../shared/ui/Portal/ui/Portal';
 import { RaceResult } from '../../../entities/race/model/types';
 import { messages } from '../../../shared/lib/const';
+import styles from './style.module.scss';
 
 type Props = {
   currentPage: number;
@@ -58,7 +59,7 @@ function ControlRace({ currentPage, screenSize }: Props) {
   }, [data?.result, raceAll, startRace, screenSize]);
 
   return (
-    <div>
+    <div className={styles.controlRace}>
       <Button name="Race" disabled={raceIsStarted} onClick={raceHandler} />
       <Button name="Reset" disabled={!raceIsStarted} onClick={resetHandler} />
       {isModalOpen && (

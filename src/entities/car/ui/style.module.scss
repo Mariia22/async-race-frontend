@@ -1,0 +1,27 @@
+.car {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 15px 1fr;
+  gap: 0.5rem;
+  width: 100px;
+  align-items: center;
+
+  &EditButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  &RaceButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  &Name {
+    font:
+      14px/1.4 'Jersey',
+      sans-serif;
+    grid-column: span 3;
+  }
+}

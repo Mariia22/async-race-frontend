@@ -1,0 +1,26 @@
+.headerList {
+  display: flex;
+  gap: 0.5rem;
+
+  &Item a {
+    font:
+      18px/1.4 'Jersey',
+      sans-serif;
+    text-decoration: none;
+    color: red;
+
+    &:hover {
+      color: yellow;
+      opacity: 1;
+    }
+
+    &:visited {
+      color: blue;
+      opacity: 1;
+    }
+
+    &Active {
+      opacity: 1;
+    }
+  }
+}

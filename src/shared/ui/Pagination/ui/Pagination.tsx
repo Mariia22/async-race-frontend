@@ -1,5 +1,7 @@
 import { dots } from '../../../lib/const';
+import Button from '../../Button/Button';
 import usePagination from '../model/usePagination';
+import styles from './style.module.scss';
 
 export type PaginationProps = {
   onPageChange: (page: number) => void;
@@ -37,10 +39,8 @@ function Pagination({
 
   // const lastPage = paginationRange && paginationRange[paginationRange.length - 1];
   return (
-    <div>
-      <button key="left" type="button" onClick={onPrevious} onKeyDown={onPrevious}>
-        Left
-      </button>
+    <div className={styles.pagination}>
+      <Button key="left" name="<<" onClick={onPrevious} />
       {paginationRange
         && paginationRange.map((pageNumber) => {
           if (pageNumber === dots) {
@@ -51,19 +51,14 @@ function Pagination({
             );
           }
           return (
-            <button
+            <Button
               key={pageNumber}
-              type="button"
               onClick={() => onPageChange(Number(pageNumber))}
-              onKeyDown={() => onPageChange(Number(pageNumber))}
-            >
-              {pageNumber}
-            </button>
+              name={pageNumber}
+            />
           );
         })}
-      <button key="right" type="button" onClick={onNext} onKeyDown={onNext}>
-        Right
-      </button>
+      <Button key="right" name=">>" onClick={onNext} />
     </div>
   );
 }

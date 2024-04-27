@@ -4,6 +4,8 @@ import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import appRouter from './appRouter';
 import { store } from './appStore';
+import '../shared/style/reset.scss';
+import '../shared/style/global.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

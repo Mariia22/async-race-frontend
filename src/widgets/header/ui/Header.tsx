@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+import cl from 'classnames';
 import { RouteType } from '../../../shared/lib/types';
+import styles from './style.module.scss';
 
 type Props = {
   routes: RouteType[] | RouteType;
@@ -8,10 +10,10 @@ type Props = {
 function Header({ routes }: Props) {
   return (
     <nav>
-      <ul>
+      <ul className={styles.headerList}>
         {Array.isArray(routes) ? (
           routes.map((link) => (
-            <li key={link.key}>
+            <li key={link.key} className={cl(styles.headerListItem, styles.headerListActive)}>
               <Link to={link.link}>{link.name}</Link>
             </li>
           ))
