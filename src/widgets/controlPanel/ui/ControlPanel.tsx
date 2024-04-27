@@ -5,12 +5,13 @@ import CarUpdateForm from '../../../features/car-update/ui/CarUpdateForm';
 
 type Props = {
   currentPage: number;
+  screenSize: number;
 };
 
-function ControlPanel({ currentPage }: Props) {
+function ControlPanel({ currentPage, screenSize }: Props) {
   return (
     <>
-      <ControlRace currentPage={currentPage} />
+      <ControlRace currentPage={currentPage} screenSize={screenSize} />
       <CarCreateForm />
       <CarUpdateForm />
       <CarGenerate />

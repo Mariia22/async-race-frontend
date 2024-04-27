@@ -3,8 +3,6 @@ import { carApi } from '../../../entities/car/api/carApi';
 import { RaceResult, RaceWinner } from '../../../entities/race/model/types';
 import { StatusCode } from '../../../shared/lib/types';
 import { useAnimation } from '../../../shared/model/hooks';
-// TODO: add screenDistance
-import { screenDistance } from '../../../shared/lib/const';
 import { CarItemType } from '../../../entities/car/model/types';
 import useUpdateWinner from '../../winner-create-or-update/model/hooks';
 
@@ -42,7 +40,7 @@ const useRace = () => {
     return null;
   }
 
-  async function startRace(id: number): Promise<RaceWinner> {
+  async function startRace(id: number, screenDistance: number): Promise<RaceWinner> {
     const startMode = await startEngine(id).unwrap();
     if (startMode) {
       startAnimation(id, Math.min(startMode.distance / startMode.velocity), screenDistance);

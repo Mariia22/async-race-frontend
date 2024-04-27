@@ -6,13 +6,18 @@ import CarDeleteButton from '../../../features/car-delete/ui/CarDeleteButton';
 import CarSelectButton from '../../../features/car-select/ui/CarSelectButton';
 import { CarItemType } from '../model/types';
 import { carApi } from '../api/carApi';
-import { screenDistance } from '../../../shared/lib/const';
 import { StatusCode } from '../../../shared/lib/types';
 import { useAnimation, useAppSelector } from '../../../shared/model/hooks';
 import { selectCarById } from '../../race/model/raceSlice';
 import { AnimationType } from '../../race/model/types';
 
-function Car({ id, name, color }: CarItemType) {
+type Props = {
+  car: CarItemType;
+  screenSize: number;
+};
+
+function Car({ car, screenSize }: Props) {
+  const { id, name, color } = car;
   const [startEngine] = carApi.useStartEngineMutation();
   const [driveEngine] = carApi.useDriveEngineMutation();
   const [stopEngine] = carApi.useStopEngineMutation();
@@ -23,7 +28,7 @@ function Car({ id, name, color }: CarItemType) {
     startEngine(id)
       .unwrap()
       .then((startMode) => {
-        startAnimation(id, Math.min(startMode.distance / startMode.velocity), screenDistance);
+        startAnimation(id, Math.min(startMode.distance / startMode.velocity), screenSize);
       })
       .then(() => driveEngine(id).unwrap())
       .catch((error: FetchBaseQueryError) => {

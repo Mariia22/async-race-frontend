@@ -11,9 +11,10 @@ import { messages } from '../../../shared/lib/const';
 
 type Props = {
   currentPage: number;
+  screenSize: number;
 };
 
-function ControlRace({ currentPage }: Props) {
+function ControlRace({ currentPage, screenSize }: Props) {
   const dispatch = useAppDispatch();
   const [stopEngine] = carApi.useStopEngineMutation();
   const { raceAll, startRace } = useRace();
@@ -38,7 +39,7 @@ function ControlRace({ currentPage }: Props) {
     if (cars) {
       const promises = [];
       const addPromise = async (car: CarItemType) => {
-        const promise = await startRace(car.id);
+        const promise = await startRace(car.id, screenSize);
         return promise;
       };
       for (let i = 0; i < cars.length; i += 1) {

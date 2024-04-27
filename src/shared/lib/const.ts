@@ -19,9 +19,7 @@ export const limitCarsPerPage = 7;
 export const limitWinnersPerPage = 10;
 export const initialColor = '#ffffff';
 export const initialCar = { name: '', color: initialColor, id: 0 };
-export const distanceAfterFlag = 50;
+export const distanceAfterFlag = 100;
 export const messages = {
   raceError: 'The race ended without winners',
 };
-// TODO: get distance from page
-export const screenDistance = 500;
