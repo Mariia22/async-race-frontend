@@ -42,7 +42,7 @@ function GaragePage() {
       <div>
         {data.result?.map((car: CarItemType) => (
           <Fragment key={car.id}>
-            <Car key={car.id} car={car} screenSize={width} />
+            <Car key={car.id} car={car} screenSize={width} totalCount={Number(data?.count)} />
           </Fragment>
         ))}
       </div>

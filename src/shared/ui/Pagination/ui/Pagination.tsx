@@ -37,14 +37,18 @@ function Pagination({
 
   // const lastPage = paginationRange && paginationRange[paginationRange.length - 1];
   return (
-    <div key="left">
-      <button type="button" onClick={onPrevious} onKeyDown={onPrevious} key="left">
+    <div>
+      <button key="left" type="button" onClick={onPrevious} onKeyDown={onPrevious}>
         Left
       </button>
       {paginationRange
         && paginationRange.map((pageNumber) => {
           if (pageNumber === dots) {
-            return <div className="pagination-item dots">&#8230;</div>;
+            return (
+              <div key="dots" className="pagination-item dots">
+                &#8230;
+              </div>
+            );
           }
           return (
             <button
@@ -57,7 +61,7 @@ function Pagination({
             </button>
           );
         })}
-      <button type="button" onClick={onNext} onKeyDown={onNext}>
+      <button key="right" type="button" onClick={onNext} onKeyDown={onNext}>
         Right
       </button>
     </div>

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import CarIcon from '../assets/car.svg?react';
 import Button from '../../../shared/ui/Button/Button';
@@ -14,9 +14,10 @@ import { AnimationType } from '../../race/model/types';
 type Props = {
   car: CarItemType;
   screenSize: number;
+  totalCount: number;
 };
 
-function Car({ car, screenSize }: Props) {
+function Car({ car, screenSize, totalCount }: Props) {
   const { id, name, color } = car;
   const [startEngine] = carApi.useStartEngineMutation();
   const [driveEngine] = carApi.useDriveEngineMutation();
@@ -51,11 +52,13 @@ function Car({ car, screenSize }: Props) {
       .catch((error) => console.log(error));
   }, [stopEngine, id, stopAnimationAndReturnToStart]);
 
+  useEffect(() => () => stopEngineHandler(), []);
+
   return (
     <>
       <div>
         <CarSelectButton id={id} name={name} color={color} />
-        <CarDeleteButton id={id} />
+        <CarDeleteButton id={id} totalCount={totalCount} />
       </div>
       <div>
         <Button
