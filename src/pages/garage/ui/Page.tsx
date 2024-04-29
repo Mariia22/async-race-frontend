@@ -61,8 +61,7 @@ function GaragePage() {
   }
 
   if (isError) {
-    console.log(error);
-    content = <div>{MESSAGES.pageNotLoad}</div>;
+    content = <div>{`${MESSAGES.pageNotLoad}, Error:${error}`}</div>;
   }
 
   return (

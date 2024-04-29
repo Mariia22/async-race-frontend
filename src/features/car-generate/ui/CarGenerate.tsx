@@ -16,8 +16,7 @@ function CarGenerate() {
     return <Button name={MESSAGES.loading} disabled onClick={generateAndCreateCars} />;
   }
   if (isError) {
-    console.error(error);
-    return <div>{MESSAGES.carsAreNotGenerated}</div>;
+    return <div>{`${MESSAGES.carsAreNotGenerated}, Error: ${error}`}</div>;
   }
 
   return <Button name="Generate cars" onClick={generateAndCreateCars} />;

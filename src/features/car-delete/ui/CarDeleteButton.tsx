@@ -37,8 +37,7 @@ function CarDeleteButton({ id, totalCount }: Props) {
   }
 
   if (isError) {
-    console.error(error);
-    return <div>{MESSAGES.carIsNotDeleted}</div>;
+    return <div>{`${MESSAGES.carIsNotDeleted}, Error: ${error}`}</div>;
   }
 
   return <Button name="Remove" onClick={() => removeCar(id)} />;

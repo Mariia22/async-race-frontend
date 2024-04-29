@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import CarIcon from '../assets/car.svg?react';
 import Button from '../../../shared/ui/Button/Button';
@@ -25,6 +25,7 @@ function Car({ car, screenSize, totalCount }: Props) {
   const [stopEngine] = carApi.useStopEngineMutation();
   const carInMotion: AnimationType = useAppSelector((state) => selectCarById(state, id));
   const { startAnimation, cancelAnimation, stopAnimationAndReturnToStart } = useAnimation();
+  const [carError, setError] = useState<FetchBaseQueryError | null>(null);
 
   const startEngineHandler = useCallback(() => {
     startEngine(id)
@@ -41,7 +42,7 @@ function Car({ car, screenSize, totalCount }: Props) {
         ) {
           cancelAnimation(id);
         } else {
-          console.error(error);
+          setError(error);
         }
       });
   }, [startEngine, driveEngine, id, startAnimation, cancelAnimation, screenSize]);
@@ -50,11 +51,12 @@ function Car({ car, screenSize, totalCount }: Props) {
     stopEngine(id)
       .unwrap()
       .then(() => stopAnimationAndReturnToStart(id))
-      .catch((error) => console.log(error));
+      .catch((error) => setError(error));
   }, [stopEngine, id, stopAnimationAndReturnToStart]);
 
   return (
     <section className={styles.car}>
+      {carError && <p>{carError.status}</p>}
       <p className={styles.carName}>{name}</p>
       <div className={styles.carEditButtons}>
         <CarSelectButton id={id} name={name} color={color} />

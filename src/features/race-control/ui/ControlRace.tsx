@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { carApi } from '../../../entities/car/api/carApi';
 import { isRacing, setIsRacing, stopRace } from '../../../entities/race/model/raceSlice';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
@@ -23,17 +24,19 @@ function ControlRace({ currentPage, screenSize }: Props) {
   const { data } = carApi.useGetAllCarsQuery(currentPage);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [winner, setWinner] = useState<RaceResult | null>(null);
+  const [raceError, setError] = useState<FetchBaseQueryError | null>(null);
 
   const resetHandler = useCallback(() => {
     data?.result.forEach((car) => {
       stopEngine(car.id)
         .unwrap()
         .then(() => dispatch(stopRace()))
-        .catch((error) => console.log(error));
+        .catch((error) => setError(error));
     });
   }, [data?.result, dispatch, stopEngine]);
 
   const raceHandler = useCallback(async () => {
+    console.log('race', isRaceStart);
     dispatch(setIsRacing(true));
     const cars = data?.result;
     if (cars) {
@@ -59,6 +62,7 @@ function ControlRace({ currentPage, screenSize }: Props) {
 
   return (
     <div className={styles.controlRace}>
+      {raceError && <p>{raceError.status}</p>}
       <Button name="Race" disabled={isRaceStart} onClick={raceHandler} />
       <Button name="Reset" disabled={!isRaceStart} onClick={resetHandler} />
       {isModalOpen && (

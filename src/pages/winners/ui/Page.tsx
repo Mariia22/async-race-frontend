@@ -41,8 +41,7 @@ function WinnersPage() {
   }
 
   if (isError) {
-    console.error(error);
-    content = <div>{MESSAGES.pageNotLoad}</div>;
+    content = <div>{`${MESSAGES.pageNotLoad}, Error: ${error}`}</div>;
   }
 
   if (isSuccess) {
