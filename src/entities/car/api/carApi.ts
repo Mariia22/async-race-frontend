@@ -24,12 +24,6 @@ export const carApi = createApi({
       },
       providesTags: [CAR_TAG],
     }),
-    getCar: builder.query<CarItemType, number>({
-      query: (id: number) => ({
-        url: `/garage/${id}`,
-      }),
-      providesTags: [CAR_TAG],
-    }),
     createCar: builder.mutation({
       query: (car: Partial<CarItemType> | CarItemType) => ({
         url: '/garage',
@@ -84,7 +78,6 @@ export const carApi = createApi({
 
 export const {
   useGetAllCarsQuery,
-  useGetCarQuery,
   useCreateCarMutation,
   useUpdateCarMutation,
   useDeleteCarMutation,

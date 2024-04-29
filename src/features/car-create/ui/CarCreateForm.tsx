@@ -19,7 +19,7 @@ function CarCreateForm() {
       await createCar({ id, name, color });
       dispatch(resetTemplateForCreatingCar());
     },
-    [createCar],
+    [dispatch, createCar],
   );
 
   const setCarName = (name: string) => {

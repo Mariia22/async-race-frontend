@@ -50,12 +50,12 @@ function ControlRace({ currentPage, screenSize }: Props) {
         cars.map((item) => item.id),
         cars,
       );
-      if (result && isRaceStart) {
+      if (result) {
         setWinner(result);
-        setOpenModal(true);
       }
+      setOpenModal(true);
     }
-  }, [data?.result, raceAll, startRace, screenSize]);
+  }, [data?.result, raceAll, startRace, screenSize, dispatch, isRaceStart]);
 
   return (
     <div className={styles.controlRace}>

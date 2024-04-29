@@ -53,12 +53,6 @@ function Car({ car, screenSize, totalCount }: Props) {
       .catch((error) => console.log(error));
   }, [stopEngine, id, stopAnimationAndReturnToStart]);
 
-  // useEffect(() => {
-  //   if (carInMotion) {
-  //     return () => stopEngineHandler();
-  //   }
-  // }, [carInMotion]);
-
   return (
     <section className={styles.car}>
       <p className={styles.carName}>{name}</p>

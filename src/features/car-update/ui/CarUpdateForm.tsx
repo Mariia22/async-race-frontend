@@ -19,7 +19,7 @@ function CarUpdateForm() {
       await updateCar({ id, name, color });
       dispatch(unselectCar());
     },
-    [updateCar],
+    [dispatch, updateCar],
   );
 
   const setCarName = (name: string) => {
