@@ -4,6 +4,7 @@ import { AnimationType, RaceType } from './types';
 
 const initialState: RaceType = {
   animationStack: [],
+  isRacing: false,
 };
 
 export const raceSlice = createSlice({
@@ -40,6 +41,9 @@ export const raceSlice = createSlice({
         (item: AnimationType) => item.id !== action.payload,
       );
     },
+    setIsRacing: (state, action: PayloadAction<boolean>) => {
+      state.isRacing = action.payload;
+    },
     stopRace: () => initialState,
     brokeCar: (state, action: PayloadAction<number>) => {
       const brokenCar = state.animationStack.find((item) => item.id === action.payload);
@@ -51,6 +55,7 @@ export const raceSlice = createSlice({
 });
 
 export const getAllDrivingCars = (state: RootState) => state.race.animationStack;
+export const isRacing = (state: RootState) => state.race.isRacing;
 export const selectCarById = createSelector(
   getAllDrivingCars,
   (_: RootState, carId) => carId,
@@ -64,4 +69,5 @@ export const {
   brokeCar,
   stopCar,
   stopRace,
+  setIsRacing,
 } = raceSlice.actions;

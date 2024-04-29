@@ -10,6 +10,7 @@ export type AnimationType = {
 
 export type RaceType = {
   animationStack: AnimationType[];
+  isRacing: boolean;
 };
 
 export type RaceWinner = {

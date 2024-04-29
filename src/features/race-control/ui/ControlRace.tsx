@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { carApi } from '../../../entities/car/api/carApi';
-import { stopRace } from '../../../entities/race/model/raceSlice';
-import { useAppDispatch } from '../../../shared/model/hooks';
+import { isRacing, setIsRacing, stopRace } from '../../../entities/race/model/raceSlice';
+import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import Button from '../../../shared/ui/Button/Button';
 import useRace from '../model/hooks';
 import { CarItemType } from '../../../entities/car/model/types';
@@ -16,16 +16,15 @@ type Props = {
 };
 
 function ControlRace({ currentPage, screenSize }: Props) {
+  const isRaceStart = useAppSelector(isRacing);
   const dispatch = useAppDispatch();
   const [stopEngine] = carApi.useStopEngineMutation();
   const { raceAll, startRace } = useRace();
-  const [raceIsStarted, setRaceStart] = useState<boolean>(false);
   const { data } = carApi.useGetAllCarsQuery(currentPage);
   const [isModalOpen, setOpenModal] = useState<boolean>(false);
   const [winner, setWinner] = useState<RaceResult | null>(null);
 
   const resetHandler = useCallback(() => {
-    setRaceStart(false);
     data?.result.forEach((car) => {
       stopEngine(car.id)
         .unwrap()
@@ -35,7 +34,7 @@ function ControlRace({ currentPage, screenSize }: Props) {
   }, [data?.result, dispatch, stopEngine]);
 
   const raceHandler = useCallback(async () => {
-    setRaceStart(true);
+    dispatch(setIsRacing(true));
     const cars = data?.result;
     if (cars) {
       const promises = [];
@@ -51,17 +50,17 @@ function ControlRace({ currentPage, screenSize }: Props) {
         cars.map((item) => item.id),
         cars,
       );
-      if (result) {
+      if (result && isRaceStart) {
         setWinner(result);
+        setOpenModal(true);
       }
-      setOpenModal(true);
     }
   }, [data?.result, raceAll, startRace, screenSize]);
 
   return (
     <div className={styles.controlRace}>
-      <Button name="Race" disabled={raceIsStarted} onClick={raceHandler} />
-      <Button name="Reset" disabled={!raceIsStarted} onClick={resetHandler} />
+      <Button name="Race" disabled={isRaceStart} onClick={raceHandler} />
+      <Button name="Reset" disabled={!isRaceStart} onClick={resetHandler} />
       {isModalOpen && (
         <Portal closePortal={() => setOpenModal(false)}>
           {winner ? (

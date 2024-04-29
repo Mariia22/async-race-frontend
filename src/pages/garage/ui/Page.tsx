@@ -22,7 +22,6 @@ function GaragePage() {
     data, isLoading, isFetching, isSuccess, isError, error,
   } = carApi.useGetAllCarsQuery(currentPage);
   let content;
-  console.log(width);
 
   useEffect(() => {
     const handleResize = () => {
