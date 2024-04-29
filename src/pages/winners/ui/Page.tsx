@@ -1,7 +1,10 @@
-import { WINNERSPERPAGE } from '../../../shared/lib/const';
+import { useState } from 'react';
+import { MESSAGES, WINNERSPERPAGE } from '../../../shared/lib/const';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
-import { Winner } from '../../../entities/winner/model/types';
+import {
+  Order, Sort, SortOrderType, Winner,
+} from '../../../entities/winner/model/types';
 import CarIcon from '../../../entities/car/assets/car.svg?react';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import {
@@ -11,6 +14,7 @@ import {
 
 function WinnersPage() {
   let content;
+  const [sortAndOrder, setSortAndOrder] = useState<SortOrderType>({ sort: null, order: null });
   const currentPage = useAppSelector(selectedCurrentWinnerPage);
   const dispatch = useAppDispatch();
   const {
@@ -18,21 +22,27 @@ function WinnersPage() {
   } = winnerApi.useGetAllWinnersQuery({
     page: currentPage,
     limit: WINNERSPERPAGE,
-    sort: null,
-    order: null,
+    sort: sortAndOrder.sort,
+    order: sortAndOrder.order,
   });
 
+  function sortTable(sort: Sort) {
+    return sortAndOrder.order === Order.ASC
+      ? setSortAndOrder({ sort, order: Order.DESC })
+      : setSortAndOrder({ sort, order: Order.ASC });
+  }
+
   if (isLoading) {
-    content = <div>Loading...</div>;
+    content = <div>{MESSAGES.loading}</div>;
   }
 
   if (!isFetching && data?.count === 0) {
-    content = <div>There are no winners</div>;
+    content = <div>{MESSAGES.noWinners}</div>;
   }
 
   if (isError) {
-    console.log(error);
-    content = <div>error</div>;
+    console.error(error);
+    content = <div>{MESSAGES.pageNotLoad}</div>;
   }
 
   if (isSuccess) {
@@ -44,8 +54,8 @@ function WinnersPage() {
               <td>Number</td>
               <td>Car</td>
               <td>Name</td>
-              <td onClick={() => console.log('sort')}>Wins</td>
-              <td onClick={() => console.log('time')}>Best times(seconds)</td>
+              <td onClick={() => sortTable(Sort.wins)}>Wins</td>
+              <td onClick={() => sortTable(Sort.time)}>Best times(seconds)</td>
             </tr>
           </thead>
           <tbody>

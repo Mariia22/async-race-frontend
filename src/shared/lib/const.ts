@@ -8,4 +8,10 @@ export const START = 100;
 export const MESSAGES = {
   raceError: 'The race ended without winners',
   carEnterError: "Enter the car's name more than 3 characters long",
+  pageNotLoad: 'Page is not downloaded. Please, check if backend is running',
+  noCarsInTheGarage: 'There are no cars in the garage',
+  noWinners: 'There are no winners',
+  loading: 'Loading...',
+  carIsNotDeleted: 'Car is not deleted. Try again or connect with our tech support',
+  carsAreNotGenerated: 'Cars are not generated. Try again or connect with our tech support',
 };

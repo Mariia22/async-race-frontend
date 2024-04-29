@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import ControlPanel from '../../../widgets/controlPanel/ui/ControlPanel';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
-import { FINISH, START, CARSPERPAGE } from '../../../shared/lib/const';
+import {
+  FINISH, START, CARSPERPAGE, MESSAGES,
+} from '../../../shared/lib/const';
 import { carApi } from '../../../entities/car/api/carApi';
 import { CarItemType } from '../../../entities/car/model/types';
 import Car from '../../../entities/car/ui/Car';
@@ -31,11 +33,11 @@ function GaragePage() {
   }, []);
 
   if (isLoading) {
-    content = <div>Loading...</div>;
+    content = <div>{MESSAGES.loading}</div>;
   }
 
   if (!isFetching && data?.count === 0) {
-    content = <div>There are no cars in the garage</div>;
+    content = <div>{MESSAGES.noCarsInTheGarage}</div>;
   }
 
   if (isSuccess) {
@@ -60,7 +62,7 @@ function GaragePage() {
 
   if (isError) {
     console.log(error);
-    content = <div>error</div>;
+    content = <div>{MESSAGES.pageNotLoad}</div>;
   }
 
   return (

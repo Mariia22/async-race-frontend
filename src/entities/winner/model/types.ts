@@ -17,7 +17,6 @@ export type WinnerType = {
 };
 
 export enum Sort {
-  id = 'id',
   wins = 'wins',
   time = 'time',
 }
@@ -26,3 +25,8 @@ export enum Order {
   ASC = 'asc',
   DESC = 'desc',
 }
+
+export type SortOrderType = {
+  sort: Sort | null;
+  order: Order | null;
+};

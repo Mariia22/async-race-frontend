@@ -1,7 +1,7 @@
 import { carApi } from '../../../entities/car/api/carApi';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
-import { CARSPERPAGE } from '../../../shared/lib/const';
+import { CARSPERPAGE, MESSAGES } from '../../../shared/lib/const';
 import { checkIsPageLast } from '../../../shared/lib/functions';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import Button from '../../../shared/ui/Button/Button';
@@ -33,12 +33,12 @@ function CarDeleteButton({ id, totalCount }: Props) {
   }
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return <div>{MESSAGES.loading}</div>;
   }
 
   if (isError) {
     console.error(error);
-    return <div>Error</div>;
+    return <div>{MESSAGES.carIsNotDeleted}</div>;
   }
 
   return <Button name="Remove" onClick={() => removeCar(id)} />;
