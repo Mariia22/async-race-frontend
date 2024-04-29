@@ -24,8 +24,10 @@ function Pagination({
     siblingCount,
     pageSize,
   });
+  const lastPage = paginationRange && paginationRange[paginationRange.length - 1];
+  let dotsIndex = 0;
 
-  if (currentPage === 0 || (paginationRange && paginationRange.length < 2)) {
+  if (currentPage === 0) {
     return null;
   }
 
@@ -37,18 +39,14 @@ function Pagination({
     onPageChange(currentPage - 1);
   };
 
-  // const lastPage = paginationRange && paginationRange[paginationRange.length - 1];
   return (
     <div className={styles.pagination}>
-      <Button key="left" name="<<" onClick={onPrevious} />
+      <Button key="left" name="<<" onClick={onPrevious} disabled={currentPage === 1} />
       {paginationRange
         && paginationRange.map((pageNumber) => {
           if (pageNumber === DOTS) {
-            return (
-              <div key="DOTS" className="pagination-item DOTS">
-                &#8230;
-              </div>
-            );
+            dotsIndex += 1;
+            return <div key={DOTS + dotsIndex}>&#8230;</div>;
           }
           return (
             <Button
@@ -58,7 +56,7 @@ function Pagination({
             />
           );
         })}
-      <Button key="right" name=">>" onClick={onNext} />
+      <Button key="right" name=">>" onClick={onNext} disabled={currentPage === lastPage} />
     </div>
   );
 }

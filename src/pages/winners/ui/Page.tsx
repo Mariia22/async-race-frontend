@@ -8,11 +8,9 @@ import {
   selectedCurrentWinnerPage,
   setWinnerCurrentPage,
 } from '../../../entities/winner/model/winnerSlice';
-import routes from '../../../shared/lib/routes';
 
 function WinnersPage() {
   let content;
-  let notification;
   const currentPage = useAppSelector(selectedCurrentWinnerPage);
   const dispatch = useAppDispatch();
   const {
@@ -25,37 +23,59 @@ function WinnersPage() {
   });
 
   if (isLoading) {
-    notification = <div>Loading...</div>;
+    content = <div>Loading...</div>;
   }
 
   if (!isFetching && data?.count === 0) {
-    notification = <div>There are no winners</div>;
+    content = <div>There are no winners</div>;
   }
 
   if (isError) {
     console.log(error);
-    notification = <div>error</div>;
+    content = <div>error</div>;
   }
 
   if (isSuccess) {
-    content = data?.result.map((winner: Winner) => (
-      <tr key={winner.id}>
-        <td>{winner.id}</td>
-        <td aria-label="Car label">
-          <CarIcon fill={winner.color} />
-        </td>
-        <td>{winner.name}</td>
-        <td>{winner.wins}</td>
-        <td>{winner.time}</td>
-      </tr>
-    ));
+    content = (
+      <>
+        <table>
+          <thead>
+            <tr>
+              <td>Number</td>
+              <td>Car</td>
+              <td>Name</td>
+              <td onClick={() => console.log('sort')}>Wins</td>
+              <td onClick={() => console.log('time')}>Best times(seconds)</td>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.result.map((winner: Winner) => (
+              <tr key={winner.id}>
+                <td>{winner.id}</td>
+                <td aria-label="Car label">
+                  <CarIcon fill={winner.color} />
+                </td>
+                <td>{winner.name}</td>
+                <td>{winner.wins}</td>
+                <td>{winner.time}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={data?.count}
+          pageSize={WINNERSPERPAGE}
+          onPageChange={(page) => dispatch(setWinnerCurrentPage(page))}
+        />
+      </>
+    );
   }
 
   return (
     <>
       <h1>
-        {routes[1].name}
-        (
+        WINNERS (
         {data?.count || 0}
         )
       </h1>
@@ -63,25 +83,7 @@ function WinnersPage() {
         Page #
         {currentPage}
       </h2>
-      {notification}
-      <table>
-        <thead>
-          <tr>
-            <td>Number</td>
-            <td>Car</td>
-            <td>Name</td>
-            <td>Wins</td>
-            <td>Best times(seconds)</td>
-          </tr>
-        </thead>
-        <tbody>{content}</tbody>
-      </table>
-      <Pagination
-        currentPage={currentPage}
-        totalCount={data?.count}
-        pageSize={WINNERSPERPAGE}
-        onPageChange={(page) => dispatch(setWinnerCurrentPage(page))}
-      />
+      {content}
     </>
   );
 }

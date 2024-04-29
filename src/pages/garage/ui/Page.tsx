@@ -8,7 +8,6 @@ import Car from '../../../entities/car/ui/Car';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 import styles from './style.module.scss';
-import routes from '../../../shared/lib/routes';
 
 function GaragePage() {
   const currentPage = useAppSelector(selectedCurrentCarPage);
@@ -41,13 +40,21 @@ function GaragePage() {
 
   if (isSuccess) {
     content = (
-      <div className={styles.garageCars}>
-        {data.result?.map((car: CarItemType) => (
-          <div key={car.id}>
-            <Car key={car.id} car={car} screenSize={width} totalCount={Number(data?.count)} />
-          </div>
-        ))}
-      </div>
+      <>
+        <div className={styles.garageCars}>
+          {data.result?.map((car: CarItemType) => (
+            <div key={car.id}>
+              <Car key={car.id} car={car} screenSize={width} totalCount={Number(data?.count)} />
+            </div>
+          ))}
+        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={data?.count}
+          pageSize={CARSPERPAGE}
+          onPageChange={(page) => dispatch(setCarCurrentPage(page))}
+        />
+      </>
     );
   }
 
@@ -59,8 +66,7 @@ function GaragePage() {
   return (
     <section className={styles.garage}>
       <h1>
-        {routes[0].name}
-        (
+        GARAGE (
         {data?.count || 0}
         )
       </h1>
@@ -70,12 +76,6 @@ function GaragePage() {
       </h2>
       <ControlPanel currentPage={currentPage} screenSize={width} />
       {content}
-      <Pagination
-        currentPage={currentPage}
-        totalCount={data?.count}
-        pageSize={CARSPERPAGE}
-        onPageChange={(page) => dispatch(setCarCurrentPage(page))}
-      />
     </section>
   );
 }
