@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { baseUrl, limitCarsPerPage } from '../../../shared/lib/const';
+import { BASEURL, CARSPERPAGE } from '../../../shared/lib/const';
 import { CAR_TAG } from '../../../shared/lib/types';
 import {
   CarItemType, EngineDrive, EngineResponse, EngineStatus,
@@ -8,10 +8,10 @@ import {
 export const carApi = createApi({
   tagTypes: [CAR_TAG],
   reducerPath: 'carApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASEURL }),
   endpoints: (builder) => ({
     getAllCars: builder.query({
-      query: (page: number = 1, limit: number = limitCarsPerPage) => ({
+      query: (page: number = 1, limit: number = CARSPERPAGE) => ({
         url: '/garage',
         params: {
           _limit: limit,

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { WINNER_TAG } from '../../../shared/lib/types';
-import { baseUrl } from '../../../shared/lib/const';
+import { BASEURL } from '../../../shared/lib/const';
 import {
   Order, Sort, Winner, WinnerDTO,
 } from '../model/types';
@@ -20,7 +20,7 @@ type QueryResponse = {
 export const winnerApi = createApi({
   tagTypes: [WINNER_TAG],
   reducerPath: 'winnerApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASEURL }),
   endpoints: (builder) => ({
     getAllWinners: builder.query<QueryResponse, QueryProps>({
       async queryFn(_arg, _queryApi, _extraOptions, fetchWithBQ) {

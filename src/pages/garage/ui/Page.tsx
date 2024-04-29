@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
 import ControlPanel from '../../../widgets/controlPanel/ui/ControlPanel';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
-import {
-  distanceAfterFlag,
-  distanceBeforeStart,
-  limitCarsPerPage,
-  routes,
-} from '../../../shared/lib/const';
+import { FINISH, START, CARSPERPAGE } from '../../../shared/lib/const';
 import { carApi } from '../../../entities/car/api/carApi';
 import { CarItemType } from '../../../entities/car/model/types';
 import Car from '../../../entities/car/ui/Car';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 import styles from './style.module.scss';
+import routes from '../../../shared/lib/routes';
 
 function GaragePage() {
   const currentPage = useAppSelector(selectedCurrentCarPage);
   const dispatch = useAppDispatch();
-  const [width, setWidth] = useState(window.innerWidth - distanceAfterFlag - distanceBeforeStart);
+  const [width, setWidth] = useState(window.innerWidth - FINISH - START);
   const {
     data, isLoading, isFetching, isSuccess, isError, error,
   } = carApi.useGetAllCarsQuery(currentPage);
@@ -25,7 +21,7 @@ function GaragePage() {
 
   useEffect(() => {
     const handleResize = () => {
-      setWidth(window.innerWidth - distanceAfterFlag - distanceBeforeStart);
+      setWidth(window.innerWidth - FINISH - START);
     };
 
     window.addEventListener('resize', handleResize);
@@ -77,7 +73,7 @@ function GaragePage() {
       <Pagination
         currentPage={currentPage}
         totalCount={data?.count}
-        pageSize={limitCarsPerPage}
+        pageSize={CARSPERPAGE}
         onPageChange={(page) => dispatch(setCarCurrentPage(page))}
       />
     </section>

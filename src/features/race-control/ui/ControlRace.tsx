@@ -7,7 +7,7 @@ import useRace from '../model/hooks';
 import { CarItemType } from '../../../entities/car/model/types';
 import Portal from '../../../shared/ui/Portal/ui/Portal';
 import { RaceResult } from '../../../entities/race/model/types';
-import { messages } from '../../../shared/lib/const';
+import { MESSAGES } from '../../../shared/lib/const';
 import styles from './style.module.scss';
 
 type Props = {
@@ -55,7 +55,7 @@ function ControlRace({ currentPage, screenSize }: Props) {
       }
       setOpenModal(true);
     }
-  }, [data?.result, raceAll, startRace, screenSize, dispatch, isRaceStart]);
+  }, [data?.result, raceAll, startRace, screenSize, dispatch]);
 
   return (
     <div className={styles.controlRace}>
@@ -73,7 +73,7 @@ function ControlRace({ currentPage, screenSize }: Props) {
               {winner.time}
             </div>
           ) : (
-            <p>{messages.raceError}</p>
+            <p>{MESSAGES.raceError}</p>
           )}
         </Portal>
       )}

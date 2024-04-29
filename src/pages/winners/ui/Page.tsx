@@ -1,4 +1,4 @@
-import { limitWinnersPerPage, routes } from '../../../shared/lib/const';
+import { WINNERSPERPAGE } from '../../../shared/lib/const';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
 import { Winner } from '../../../entities/winner/model/types';
@@ -8,6 +8,7 @@ import {
   selectedCurrentWinnerPage,
   setWinnerCurrentPage,
 } from '../../../entities/winner/model/winnerSlice';
+import routes from '../../../shared/lib/routes';
 
 function WinnersPage() {
   let content;
@@ -18,7 +19,7 @@ function WinnersPage() {
     data, isLoading, isFetching, isSuccess, isError, error,
   } = winnerApi.useGetAllWinnersQuery({
     page: currentPage,
-    limit: limitWinnersPerPage,
+    limit: WINNERSPERPAGE,
     sort: null,
     order: null,
   });
@@ -77,8 +78,8 @@ function WinnersPage() {
       </table>
       <Pagination
         currentPage={currentPage}
-        totalCount={2}
-        pageSize={limitWinnersPerPage}
+        totalCount={data?.count}
+        pageSize={WINNERSPERPAGE}
         onPageChange={(page) => dispatch(setWinnerCurrentPage(page))}
       />
     </>

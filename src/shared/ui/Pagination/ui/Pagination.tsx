@@ -1,4 +1,4 @@
-import { dots } from '../../../lib/const';
+import { DOTS } from '../../../lib/const';
 import Button from '../../Button/Button';
 import usePagination from '../model/usePagination';
 import styles from './style.module.scss';
@@ -43,9 +43,9 @@ function Pagination({
       <Button key="left" name="<<" onClick={onPrevious} />
       {paginationRange
         && paginationRange.map((pageNumber) => {
-          if (pageNumber === dots) {
+          if (pageNumber === DOTS) {
             return (
-              <div key="dots" className="pagination-item dots">
+              <div key="DOTS" className="pagination-item DOTS">
                 &#8230;
               </div>
             );

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Button from '../Button/Button';
-import { initialColor, messages } from '../../lib/const';
+import { INITIALCOLOR, MESSAGES } from '../../lib/const';
 import styles from './style.module.scss';
 
 type Props = {
@@ -15,13 +15,13 @@ function Form({
   name, clickHandler, initialState, changeNameHandler, changeColorHandler,
 }: Props) {
   const carName = initialState?.name || '';
-  const carColor = initialState?.color || initialColor;
+  const carColor = initialState?.color || INITIALCOLOR;
   const [formError, setFormError] = useState<string>('');
 
   async function submitForm(event: React.MouseEvent | React.KeyboardEvent) {
     event.preventDefault();
     if (carName === '' || carName.length < 3) {
-      setFormError(messages.carEnterError);
+      setFormError(MESSAGES.carEnterError);
     } else {
       await clickHandler(initialState?.id || 0, carName, carColor);
       setFormError('');

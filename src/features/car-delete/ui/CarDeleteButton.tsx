@@ -1,7 +1,7 @@
 import { carApi } from '../../../entities/car/api/carApi';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
-import { limitCarsPerPage } from '../../../shared/lib/const';
+import { CARSPERPAGE } from '../../../shared/lib/const';
 import { checkIsPageLast } from '../../../shared/lib/functions';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import Button from '../../../shared/ui/Button/Button';
@@ -19,7 +19,7 @@ function CarDeleteButton({ id, totalCount }: Props) {
   const [getWinner] = winnerApi.useLazyGetWinnerQuery();
 
   async function removeCar(carId: number) {
-    if (checkIsPageLast(totalCount, limitCarsPerPage, currentPage)) {
+    if (checkIsPageLast(totalCount, CARSPERPAGE, currentPage)) {
       dispatch(setCarCurrentPage(currentPage - 1));
     }
     if (!carId) {

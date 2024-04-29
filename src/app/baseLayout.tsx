@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { routes } from '../shared/lib/const';
 import Header from '../widgets/header/ui/Header';
+import routes from '../shared/lib/routes';
 
 const baseLayout = (
   <>

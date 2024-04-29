@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CarsType, CarItemType } from './types';
 import type { RootState } from '../../../app/appStore';
-import { initialColor } from '../../../shared/lib/const';
+import { INITIALCOLOR } from '../../../shared/lib/const';
 
 const initialState: CarsType = {
   currentCarPage: 1,
   activeCar: null,
-  templateForCreatingCar: { id: 0, name: '', color: initialColor },
+  templateForCreatingCar: { id: 0, name: '', color: INITIALCOLOR },
 };
 
 export const carSlice = createSlice({

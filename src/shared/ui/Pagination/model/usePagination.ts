@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { range } from '../../../lib/functions';
 import type { PaginationProps } from '../ui/Pagination';
-import { dots } from '../../../lib/const';
+import { DOTS } from '../../../lib/const';
 
 type Props = Omit<PaginationProps, 'onPageChange' | 'className'>;
 
@@ -17,26 +17,26 @@ const usePagination = ({
     }
     const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
     const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPageCount);
-    const shouldShowLeftdots = leftSiblingIndex > 2;
-    const shouldShowRightdots = rightSiblingIndex < totalPageCount - 2;
+    const shouldShowLeftDOTS = leftSiblingIndex > 2;
+    const shouldShowRightDOTS = rightSiblingIndex < totalPageCount - 2;
     const firstPageIndex = 1;
     const lastPageIndex = totalPageCount;
 
-    if (!shouldShowLeftdots && shouldShowRightdots) {
+    if (!shouldShowLeftDOTS && shouldShowRightDOTS) {
       const leftItemCount = 3 + 2 * siblingCount;
       const leftRange = range(1, leftItemCount);
-      result = [...leftRange, dots, totalPageCount];
+      result = [...leftRange, DOTS, totalPageCount];
     }
 
-    if (shouldShowLeftdots && !shouldShowRightdots) {
+    if (shouldShowLeftDOTS && !shouldShowRightDOTS) {
       const rightItemCount = 3 + 2 * siblingCount;
       const rightRange = range(totalPageCount - rightItemCount + 1, totalPageCount);
-      result = [firstPageIndex, dots, ...rightRange];
+      result = [firstPageIndex, DOTS, ...rightRange];
     }
 
-    if (shouldShowLeftdots && shouldShowRightdots) {
+    if (shouldShowLeftDOTS && shouldShowRightDOTS) {
       const middleRange = range(leftSiblingIndex, rightSiblingIndex);
-      result = [firstPageIndex, dots, ...middleRange, dots, lastPageIndex];
+      result = [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
     return result;
   }, [totalCount, pageSize, siblingCount, currentPage]);
