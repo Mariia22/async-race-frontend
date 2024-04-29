@@ -1,32 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '../Button/Button';
-import { initialColor } from '../../lib/const';
+import { initialColor, messages } from '../../lib/const';
 import styles from './style.module.scss';
 
 type Props = {
   name: string;
+  initialState: { id: number; name: string; color: string } | null;
   clickHandler: (id: number, name: string, color: string) => Promise<void>;
-  initialState: { id: number; name: string; color: string };
+  changeNameHandler: (name: string) => void;
+  changeColorHandler: (color: string) => void;
 };
 
-function Form({ name, clickHandler, initialState }: Props) {
-  const [carName, setCarName] = useState<string>('');
-  const [carColor, setColorName] = useState<string>(initialColor);
+function Form({
+  name, clickHandler, initialState, changeNameHandler, changeColorHandler,
+}: Props) {
+  const carName = initialState?.name || '';
+  const carColor = initialState?.color || initialColor;
   const [formError, setFormError] = useState<string>('');
-
-  useEffect(() => {
-    setCarName(initialState.name);
-    setColorName(initialState.color);
-  }, [initialState]);
 
   async function submitForm(event: React.MouseEvent | React.KeyboardEvent) {
     event.preventDefault();
     if (carName === '' || carName.length < 3) {
-      setFormError('Please enter car name');
+      setFormError(messages.carEnterError);
     } else {
-      await clickHandler(initialState.id, carName, carColor);
-      setCarName('');
-      setColorName(initialColor);
+      await clickHandler(initialState?.id || 0, carName, carColor);
       setFormError('');
     }
   }
@@ -38,16 +35,17 @@ function Form({ name, clickHandler, initialState }: Props) {
         type="text"
         placeholder="Car name"
         value={carName}
-        onChange={(event) => setCarName(event.target.value)}
+        onChange={(event) => changeNameHandler(event.target.value)}
       />
       <input
         name="color"
         type="color"
         value={carColor}
-        onChange={(event) => setColorName(event.target.value)}
+        onChange={(event) => changeColorHandler(event.target.value)}
       />
       <Button
         name={name}
+        disabled={!initialState}
         isFormSubmit
         onClick={async (event) => {
           await submitForm(event);

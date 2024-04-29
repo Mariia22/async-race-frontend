@@ -5,8 +5,9 @@ export type CarItemType = {
 };
 
 export type CarsType = {
-  activeCar: CarItemType;
+  activeCar: CarItemType | null;
   currentCarPage: number;
+  templateForCreatingCar: CarItemType;
 };
 
 export enum EngineStatus {
