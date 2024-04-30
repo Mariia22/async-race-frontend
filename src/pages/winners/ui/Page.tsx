@@ -2,7 +2,7 @@ import { MESSAGES, WINNERSPERPAGE } from '../../../shared/lib/const';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
 import { Order, Sort, Winner } from '../../../entities/winner/model/types';
-import CarIcon from '../../../entities/car/assets/car.svg?react';
+import CarIcon from '../../../../public/assets/svg/car.svg?react';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import {
   selectedCurrentWinnerPage,
@@ -11,6 +11,7 @@ import {
   sortWinners,
 } from '../../../entities/winner/model/winnerSlice';
 import { serverErrorHandler } from '../../../shared/lib/functions';
+import styles from './style.module.scss';
 
 function WinnersPage() {
   let content;
@@ -82,18 +83,14 @@ function WinnersPage() {
   }
 
   return (
-    <>
+    <section className={styles.winner}>
       <h1>
         WINNERS (
         {data?.count || 0}
         )
       </h1>
-      <h2>
-        Page #
-        {currentPage}
-      </h2>
       {content}
-    </>
+    </section>
   );
 }
 export default WinnersPage;

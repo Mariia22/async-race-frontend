@@ -33,7 +33,7 @@ function Form({
       <input
         name="carName"
         type="text"
-        placeholder="Car name"
+        placeholder="Type car brand"
         value={carName}
         onChange={(event) => changeNameHandler(event.target.value)}
       />

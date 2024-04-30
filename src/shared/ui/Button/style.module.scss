@@ -1,6 +1,25 @@
+@import './../../style/variable.scss';
+
 .button {
   font:
     12px/1.4 'Jersey',
     sans-serif;
   cursor: pointer;
+  display: inline-block;
+  background-color: $background-color;
+  color: $header-color;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  overflow: hidden;
+  border: none;
+  height: 20px;
+  &:disabled {
+    opacity: 0.5;
+  }
+  &:hover:not([disabled]) {
+    color: $background-color;
+    background: $header-color;
+    box-shadow: 0 0 50px $header-color;
+  }
 }

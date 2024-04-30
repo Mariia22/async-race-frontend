@@ -1,4 +1,46 @@
+@import './../../../shared/style/variable.scss';
 .garage {
+  padding: 0 2rem;
+
+  &Rink {
+    position: relative;
+
+    &::before {
+      content: 'START';
+      position: absolute;
+      top: 5px;
+      left: 150px;
+      height: 90%;
+      width: 2rem;
+      background-color: $header-color;
+      writing-mode: vertical-rl;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.5rem;
+    }
+
+    &::after {
+      content: 'FINISH';
+      position: absolute;
+      top: 5px;
+      right: 60px;
+      height: 90%;
+      width: 2rem;
+      background-color: $header-color;
+      writing-mode: vertical-rl;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.5rem;
+    }
+  }
+
+  &Track {
+    border-bottom: 2px solid $background-color;
+    z-index: 3;
+  }
+
   &Cars {
     margin-top: 0.5rem;
     display: flex;

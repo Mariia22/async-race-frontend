@@ -1,3 +1,4 @@
+@import '../../../shared/style/variable.scss';
 .car {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -20,8 +21,21 @@
 
   &Name {
     font:
-      14px/1.4 'Jersey',
+      16px/1.4 'Jersey',
       sans-serif;
     grid-column: span 3;
+    color: $text-color;
+    text-shadow:
+      0 0 7px $text-color,
+      0 0 10px $text-color,
+      0 0 21px $text-color,
+      0 0 42px $header-color,
+      0 0 82px $header-color,
+      0 0 92px $header-color,
+      0 0 102px $header-color,
+      0 0 151px $header-color;
+  }
+  &Icon {
+    align-self: self-end;
   }
 }

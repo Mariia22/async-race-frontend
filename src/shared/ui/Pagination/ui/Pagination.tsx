@@ -41,22 +41,28 @@ function Pagination({
 
   return (
     <div className={styles.pagination}>
-      <Button key="left" name="<<" onClick={onPrevious} disabled={currentPage === 1} />
-      {paginationRange
-        && paginationRange.map((pageNumber) => {
-          if (pageNumber === DOTS) {
-            dotsIndex += 1;
-            return <div key={DOTS + dotsIndex}>&#8230;</div>;
-          }
-          return (
-            <Button
-              key={pageNumber}
-              onClick={() => onPageChange(Number(pageNumber))}
-              name={pageNumber}
-            />
-          );
-        })}
-      <Button key="right" name=">>" onClick={onNext} disabled={currentPage === lastPage} />
+      <h2>
+        Page #
+        {currentPage}
+      </h2>
+      <div className={styles.paginationButtons}>
+        <Button key="left" name="<<" onClick={onPrevious} disabled={currentPage === 1} />
+        {paginationRange
+          && paginationRange.map((pageNumber) => {
+            if (pageNumber === DOTS) {
+              dotsIndex += 1;
+              return <div key={DOTS + dotsIndex}>&#8230;</div>;
+            }
+            return (
+              <Button
+                key={pageNumber}
+                onClick={() => onPageChange(Number(pageNumber))}
+                name={pageNumber}
+              />
+            );
+          })}
+        <Button key="right" name=">>" onClick={onNext} disabled={currentPage === lastPage} />
+      </div>
     </div>
   );
 }

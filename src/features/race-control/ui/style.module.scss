@@ -1,4 +1,19 @@
+@import './../../../shared/style/variable.scss';
+
 .controlRace {
   display: flex;
   gap: 0.5rem;
+
+  &Portal {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $header-color;
+    font-size: 20px;
+    border-radius: 5%;
+    box-shadow: inset 0px 5px 10px 0px $header-color;
+  }
 }

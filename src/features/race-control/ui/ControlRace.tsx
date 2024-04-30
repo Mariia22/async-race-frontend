@@ -77,16 +77,18 @@ function ControlRace({ currentPage, screenSize }: Props) {
       {isModalOpen && (
         <Portal closePortal={() => setOpenModal(false)}>
           {winner ? (
-            <div>
-              Winner:
-              {' '}
-              {winner.winnerCar.name}
-              Time:
-              {' '}
-              {winner.time}
+            <div className={styles.controlRacePortal}>
+              <div>
+                Winner:
+                {` ${winner.winnerCar.name} `}
+              </div>
+              <div>
+                Time:
+                {` ${winner.time} `}
+              </div>
             </div>
           ) : (
-            <p>{MESSAGES.raceError}</p>
+            <div className={styles.controlRacePortal}>{MESSAGES.raceError}</div>
           )}
         </Portal>
       )}

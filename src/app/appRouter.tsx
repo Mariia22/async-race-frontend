@@ -6,7 +6,7 @@ import WinnersPage from '../pages/winners/ui/Page';
 const appRouter = () => createBrowserRouter([
   {
     element: baseLayout,
-    errorElement: <p>Error</p>,
+    errorElement: <div>Error</div>,
     children: [
       {
         path: '/',

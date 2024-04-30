@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import CarIcon from '../assets/car.svg?react';
+import CarIcon from '../../../../public/assets/svg/car.svg?react';
 import Button from '../../../shared/ui/Button/Button';
 import CarDeleteButton from '../../../features/car-delete/ui/CarDeleteButton';
 import CarSelectButton from '../../../features/car-select/ui/CarSelectButton';
@@ -66,7 +66,10 @@ function Car({ car, screenSize, totalCount }: Props) {
         <Button name="A" disabled={carInMotion?.isDriving || false} onClick={startEngineHandler} />
         <Button name="B" disabled={carInMotion?.isStop || false} onClick={stopEngineHandler} />
       </div>
-      <div style={{ transform: `translateX(${carInMotion?.coordinate || 0}px)` }}>
+      <div
+        className={styles.carIcon}
+        style={{ transform: `translateX(${carInMotion?.coordinate || 0}px)` }}
+      >
         <CarIcon fill={color} />
       </div>
     </section>

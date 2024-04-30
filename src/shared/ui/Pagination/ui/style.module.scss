@@ -1,5 +1,11 @@
 .pagination {
   display: flex;
   gap: 0.2rem;
-  justify-content: center;
+  justify-content: space-between;
+  margin: 1rem;
+
+  &Buttons {
+    display: flex;
+    gap: 0.2rem;
+  }
 }

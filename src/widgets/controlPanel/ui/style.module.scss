@@ -1,6 +1,14 @@
 .controlPanel {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+
+  &Forms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }

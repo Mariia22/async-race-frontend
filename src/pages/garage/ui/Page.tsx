@@ -42,10 +42,10 @@ function GaragePage() {
 
   if (isSuccess) {
     content = (
-      <>
+      <div className={styles.garageRink}>
         <div className={styles.garageCars}>
           {data.result?.map((car: CarItemType) => (
-            <div key={car.id}>
+            <div key={car.id} className={styles.garageTrack}>
               <Car key={car.id} car={car} screenSize={width} totalCount={Number(data?.count)} />
             </div>
           ))}
@@ -56,7 +56,7 @@ function GaragePage() {
           pageSize={CARSPERPAGE}
           onPageChange={(page) => dispatch(setCarCurrentPage(page))}
         />
-      </>
+      </div>
     );
   }
 
@@ -71,10 +71,6 @@ function GaragePage() {
         {data?.count || 0}
         )
       </h1>
-      <h2>
-        Page #
-        {currentPage}
-      </h2>
       <ControlPanel currentPage={currentPage} screenSize={width} />
       {content}
     </section>

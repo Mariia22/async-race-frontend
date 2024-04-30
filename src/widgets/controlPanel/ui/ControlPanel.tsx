@@ -13,8 +13,10 @@ function ControlPanel({ currentPage, screenSize }: Props) {
   return (
     <section className={styles.controlPanel}>
       <ControlRace currentPage={currentPage} screenSize={screenSize} />
-      <CarCreateForm />
-      <CarUpdateForm />
+      <div className={styles.controlPanelForms}>
+        <CarCreateForm />
+        <CarUpdateForm />
+      </div>
       <CarGenerate />
     </section>
   );
