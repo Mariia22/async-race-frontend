@@ -11,6 +11,7 @@ import {
   selectedCurrentWinnerPage,
   setWinnerCurrentPage,
 } from '../../../entities/winner/model/winnerSlice';
+import { serverErrorHandler } from '../../../shared/lib/functions';
 
 function WinnersPage() {
   let content;
@@ -41,7 +42,7 @@ function WinnersPage() {
   }
 
   if (isError) {
-    content = <div>{`${MESSAGES.pageNotLoad}, Error: ${error}`}</div>;
+    content = <div>{`${MESSAGES.pageNotLoad} ${serverErrorHandler(error)}`}</div>;
   }
 
   if (isSuccess) {

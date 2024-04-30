@@ -10,6 +10,7 @@ import Car from '../../../entities/car/ui/Car';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 import styles from './style.module.scss';
+import { serverErrorHandler } from '../../../shared/lib/functions';
 
 function GaragePage() {
   const currentPage = useAppSelector(selectedCurrentCarPage);
@@ -60,7 +61,7 @@ function GaragePage() {
   }
 
   if (isError) {
-    content = <div>{`${MESSAGES.pageNotLoad}, Error:${error}`}</div>;
+    content = <div>{`${MESSAGES.pageNotLoad} ${serverErrorHandler(error)}`}</div>;
   }
 
   return (

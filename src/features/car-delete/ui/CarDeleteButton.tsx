@@ -2,7 +2,7 @@ import { carApi } from '../../../entities/car/api/carApi';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
 import { CARSPERPAGE, MESSAGES } from '../../../shared/lib/const';
-import { checkIsPageLast } from '../../../shared/lib/functions';
+import { checkIsPageLast, serverErrorHandler } from '../../../shared/lib/functions';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import Button from '../../../shared/ui/Button/Button';
 
@@ -15,7 +15,7 @@ function CarDeleteButton({ id, totalCount }: Props) {
   const dispatch = useAppDispatch();
   const currentPage = useAppSelector(selectedCurrentCarPage);
   const [deleteCar, { isLoading, isError, error }] = carApi.useDeleteCarMutation();
-  const [deleteWinner] = winnerApi.useDeleteWinnerMutation();
+  const [deleteWinner, { isError: isWinErr, error: winErr }] = winnerApi.useDeleteWinnerMutation();
   const [getWinner] = winnerApi.useLazyGetWinnerQuery();
 
   async function removeCar(carId: number) {
@@ -23,7 +23,7 @@ function CarDeleteButton({ id, totalCount }: Props) {
       dispatch(setCarCurrentPage(currentPage - 1));
     }
     if (!carId) {
-      return <div>Car id is undefined</div>;
+      return <div>{MESSAGES.carIsNotFound}</div>;
     }
     const res = await getWinner(carId);
     if (res.isSuccess) {
@@ -37,7 +37,11 @@ function CarDeleteButton({ id, totalCount }: Props) {
   }
 
   if (isError) {
-    return <div>{`${MESSAGES.carIsNotDeleted}, Error: ${error}`}</div>;
+    return <div>{`${MESSAGES.carIsNotDeleted} ${serverErrorHandler(error)}`}</div>;
+  }
+
+  if (isWinErr) {
+    return <div>{`${MESSAGES.carIsNotDeleted} ${serverErrorHandler(winErr)}`}</div>;
   }
 
   return <Button name="Remove" onClick={() => removeCar(id)} />;

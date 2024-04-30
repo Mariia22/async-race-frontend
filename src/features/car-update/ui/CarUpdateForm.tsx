@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { carApi } from '../../../entities/car/api/carApi';
 import {
   selectedCar,
@@ -8,16 +8,23 @@ import {
 } from '../../../entities/car/model/carSlice';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import Form from '../../../shared/ui/Form/Form';
+import { MESSAGES } from '../../../shared/lib/const';
+import { serverErrorHandler } from '../../../shared/lib/functions';
 
 function CarUpdateForm() {
   const dispatch = useAppDispatch();
   const updatedCar = useAppSelector(selectedCar);
   const [updateCar] = carApi.useUpdateCarMutation();
+  const [error, setError] = useState<string | null>(null);
 
   const updateCarHandler = useCallback(
     async (id: number, name: string, color: string) => {
-      await updateCar({ id, name, color });
-      dispatch(unselectCar());
+      try {
+        await updateCar({ id, name, color });
+        dispatch(unselectCar());
+      } catch (err) {
+        setError(`${MESSAGES.carIsNotUpdated} ${serverErrorHandler(err)}`);
+      }
     },
     [dispatch, updateCar],
   );
@@ -31,13 +38,16 @@ function CarUpdateForm() {
   };
 
   return (
-    <Form
-      name="Update"
-      initialState={updatedCar}
-      clickHandler={updateCarHandler}
-      changeNameHandler={setCarName}
-      changeColorHandler={setCarColor}
-    />
+    <>
+      <Form
+        name="Update"
+        initialState={updatedCar}
+        clickHandler={updateCarHandler}
+        changeNameHandler={setCarName}
+        changeColorHandler={setCarColor}
+      />
+      {error && <div>{error}</div>}
+    </>
   );
 }
 

@@ -3,6 +3,7 @@ import { carApi } from '../../../entities/car/api/carApi';
 import Button from '../../../shared/ui/Button/Button';
 import { generateCars } from '../lib/functions';
 import { MESSAGES } from '../../../shared/lib/const';
+import { serverErrorHandler } from '../../../shared/lib/functions';
 
 function CarGenerate() {
   const [createCar, { isLoading, isError, error }] = carApi.useCreateCarMutation();
@@ -16,7 +17,7 @@ function CarGenerate() {
     return <Button name={MESSAGES.loading} disabled onClick={generateAndCreateCars} />;
   }
   if (isError) {
-    return <div>{`${MESSAGES.carsAreNotGenerated}, Error: ${error}`}</div>;
+    return <div>{`${MESSAGES.carsAreNotGenerated} ${serverErrorHandler(error)}`}</div>;
   }
 
   return <Button name="Generate cars" onClick={generateAndCreateCars} />;

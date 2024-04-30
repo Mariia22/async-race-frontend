@@ -1,4 +1,5 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { useErrorBoundary } from 'react-error-boundary';
 import { carApi } from '../../../entities/car/api/carApi';
 import { RaceWinner } from '../../../entities/race/model/types';
 import { StatusCode } from '../../../shared/lib/types';
@@ -11,11 +12,16 @@ const useRace = () => {
   const { createUpdateWinner } = useUpdateWinner();
   const [startEngine] = carApi.useStartEngineMutation();
   const [driveEngine] = carApi.useDriveEngineMutation();
+  const { showBoundary } = useErrorBoundary();
 
   async function writeWinner(result: RaceWinner, cars: CarItemType[] | undefined) {
     if (result.distance && result.velocity) {
       const time = Number((result.distance / result.velocity / 1000).toFixed(2));
-      await createUpdateWinner(result, time);
+      try {
+        await createUpdateWinner(result, time);
+      } catch (error) {
+        showBoundary(error);
+      }
       const winnerCar = cars?.find((car) => car.id === result.id);
       if (winnerCar) {
         return { winnerCar, time };
@@ -58,7 +64,7 @@ const useRace = () => {
         ) {
           cancelAnimation(id);
         } else {
-          console.error(error);
+          showBoundary(error);
         }
       });
     return { id, ...driveMode, ...startMode };
