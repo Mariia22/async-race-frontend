@@ -24,7 +24,6 @@ function GaragePage() {
     const handleResize = () => {
       setWidth(window.innerWidth - FINISH - START);
     };
-
     window.addEventListener('resize', handleResize);
 
     return () => {

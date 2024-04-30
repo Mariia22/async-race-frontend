@@ -1,6 +1,6 @@
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { carApi } from '../../../entities/car/api/carApi';
-import { RaceResult, RaceWinner } from '../../../entities/race/model/types';
+import { RaceWinner } from '../../../entities/race/model/types';
 import { StatusCode } from '../../../shared/lib/types';
 import { useAnimation } from '../../../shared/model/hooks';
 import { CarItemType } from '../../../entities/car/model/types';
@@ -12,11 +12,23 @@ const useRace = () => {
   const [startEngine] = carApi.useStartEngineMutation();
   const [driveEngine] = carApi.useDriveEngineMutation();
 
+  async function writeWinner(result: RaceWinner, cars: CarItemType[] | undefined) {
+    if (result.distance && result.velocity) {
+      const time = Number((result.distance / result.velocity / 1000).toFixed(2));
+      await createUpdateWinner(result, time);
+      const winnerCar = cars?.find((car) => car.id === result.id);
+      if (winnerCar) {
+        return { winnerCar, time };
+      }
+    }
+    return null;
+  }
+
   async function raceAll(
     promises: Promise<RaceWinner>[],
     ids: number[],
     cars: CarItemType[],
-  ): Promise<RaceResult | null> {
+  ): Promise<RaceWinner | null> {
     const result = await Promise.race(promises);
 
     if (!result.success) {
@@ -28,16 +40,7 @@ const useRace = () => {
       const restIndexes = [...ids.slice(0, index), ...ids.slice(index + 1, ids.length)];
       return raceAll(restPromises, restIndexes, cars);
     }
-    if (result.distance && result.velocity) {
-      const time = Number((result.distance / result.velocity / 1000).toFixed(2));
-      await createUpdateWinner(result, time);
-      const winnerCar = cars?.find((car) => car.id === result.id);
-      if (winnerCar) {
-        return { winnerCar, time };
-      }
-      return null;
-    }
-    return null;
+    return result;
   }
 
   async function startRace(id: number, screenDistance: number): Promise<RaceWinner> {
@@ -60,7 +63,7 @@ const useRace = () => {
       });
     return { id, ...driveMode, ...startMode };
   }
-  return { raceAll, startRace };
+  return { raceAll, startRace, writeWinner };
 };
 
 export default useRace;

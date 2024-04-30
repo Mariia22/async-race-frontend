@@ -44,7 +44,9 @@ export const raceSlice = createSlice({
     setIsRacing: (state, action: PayloadAction<boolean>) => {
       state.isRacing = action.payload;
     },
-    stopRace: () => initialState,
+    stopRace: (state) => {
+      state.animationStack = initialState.animationStack;
+    },
     brokeCar: (state, action: PayloadAction<number>) => {
       const brokenCar = state.animationStack.find((item) => item.id === action.payload);
       if (brokenCar) {
