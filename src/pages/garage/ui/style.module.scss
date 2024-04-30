@@ -8,31 +8,31 @@
     &::before {
       content: 'START';
       position: absolute;
-      top: 5px;
+      top: 0;
       left: 150px;
-      height: 90%;
+      height: 98%;
       width: 2rem;
       background-color: $header-color;
       writing-mode: vertical-rl;
       display: flex;
       justify-content: center;
       align-items: center;
-      letter-spacing: 0.5rem;
+      letter-spacing: 0.4rem;
     }
 
     &::after {
       content: 'FINISH';
       position: absolute;
-      top: 5px;
+      top: 0;
       right: 60px;
-      height: 90%;
+      height: 98%;
       width: 2rem;
       background-color: $header-color;
       writing-mode: vertical-rl;
       display: flex;
       justify-content: center;
       align-items: center;
-      letter-spacing: 0.5rem;
+      letter-spacing: 0.4rem;
     }
   }
 

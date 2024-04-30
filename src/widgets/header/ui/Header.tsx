@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import cl from 'classnames';
 import { RouteType } from '../../../shared/lib/types';
 import styles from './style.module.scss';
 
@@ -13,7 +12,7 @@ function Header({ routes }: Props) {
       <ul className={styles.headerList}>
         {Array.isArray(routes) ? (
           routes.map((link) => (
-            <li key={link.key} className={cl(styles.headerListItem, styles.headerListActive)}>
+            <li key={link.key} className={styles.headerListItem}>
               <Link to={link.link}>{link.name}</Link>
             </li>
           ))

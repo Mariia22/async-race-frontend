@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import { selectedCurrentCarPage, setCarCurrentPage } from '../../../entities/car/model/carSlice';
 import styles from './style.module.scss';
 import { serverErrorHandler } from '../../../shared/lib/functions';
+import { setIsRacing } from '../../../entities/race/model/raceSlice';
 
 function GaragePage() {
   const currentPage = useAppSelector(selectedCurrentCarPage);
@@ -20,6 +21,11 @@ function GaragePage() {
     data, isLoading, isFetching, isSuccess, isError, error,
   } = carApi.useGetAllCarsQuery(currentPage);
   let content;
+
+  function onPageChange(page: number) {
+    dispatch(setCarCurrentPage(page));
+    dispatch(setIsRacing(false));
+  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,21 +48,23 @@ function GaragePage() {
 
   if (isSuccess) {
     content = (
-      <div className={styles.garageRink}>
-        <div className={styles.garageCars}>
-          {data.result?.map((car: CarItemType) => (
-            <div key={car.id} className={styles.garageTrack}>
-              <Car key={car.id} car={car} screenSize={width} totalCount={Number(data?.count)} />
-            </div>
-          ))}
+      <>
+        <div className={styles.garageRink}>
+          <div className={styles.garageCars}>
+            {data.result?.map((car: CarItemType) => (
+              <div key={car.id} className={styles.garageTrack}>
+                <Car key={car.id} car={car} screenSize={width} totalCount={Number(data?.count)} />
+              </div>
+            ))}
+          </div>
         </div>
         <Pagination
           currentPage={currentPage}
           totalCount={data?.count}
           pageSize={CARSPERPAGE}
-          onPageChange={(page) => dispatch(setCarCurrentPage(page))}
+          onPageChange={(page) => onPageChange(page)}
         />
-      </div>
+      </>
     );
   }
 
