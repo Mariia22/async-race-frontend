@@ -16,13 +16,12 @@ body {
   background-image: url('/assets/images/race.jpg');
   height: 100%;
   width: 100%;
-  background-size: 'cover';
-  background-repeat: 'no-repeat';
+  background-size: cover;
 }
 
 h1 {
   font:
-    24px/1.4 'Jersey',
+    20px/1.4 'Jersey',
     sans-serif;
   color: $header-color;
 }
@@ -39,7 +38,7 @@ input {
   padding: 0 10px;
   border-radius: 3px;
   border: 1px solid $header-color;
-  font-size: 14px;
+  font-size: 11px;
   outline: none;
   box-shadow: inset 0px 5px 10px 0px $header-color;
 }

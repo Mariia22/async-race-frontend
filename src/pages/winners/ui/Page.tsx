@@ -48,26 +48,33 @@ function WinnersPage() {
   if (isSuccess) {
     content = (
       <>
-        <table>
-          <thead>
+        <table className={styles.winnerTable}>
+          <thead className={styles.winnerThead}>
             <tr>
-              <td>Number</td>
-              <td>Car</td>
-              <td>Name</td>
-              <td onClick={() => sortTable(Sort.wins)}>Wins</td>
-              <td onClick={() => sortTable(Sort.time)}>Best times(seconds)</td>
+              <td className={styles.winnerTd}>Number</td>
+              <td className={styles.winnerTd}>Car</td>
+              <td className={styles.winnerTd}>Name</td>
+              <td className={styles.winnerSort} onClick={() => sortTable(Sort.wins)}>
+                Wins
+              </td>
+              <td className={styles.winnerSort} onClick={() => sortTable(Sort.time)}>
+                Best times(seconds)
+              </td>
             </tr>
           </thead>
           <tbody>
-            {data?.result.map((winner: Winner) => (
-              <tr key={winner.id}>
-                <td>{winner.id}</td>
-                <td aria-label="Car label">
+            {data?.result.map((winner: Winner, index: number) => (
+              <tr
+                key={winner.id}
+                className={index % 2 === 1 ? styles.winnerTyellow : styles.winnerTblack}
+              >
+                <td className={styles.winnerTd}>{winner.id}</td>
+                <td className={styles.winnerTd} aria-label="Car label">
                   <CarIcon fill={winner.color} />
                 </td>
-                <td>{winner.name}</td>
-                <td>{winner.wins}</td>
-                <td>{winner.time}</td>
+                <td className={styles.winnerTd}>{winner.name}</td>
+                <td className={styles.winnerTd}>{winner.wins}</td>
+                <td className={styles.winnerTd}>{winner.time}</td>
               </tr>
             ))}
           </tbody>
