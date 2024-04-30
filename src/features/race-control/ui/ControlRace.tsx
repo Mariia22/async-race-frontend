@@ -34,7 +34,7 @@ function ControlRace({ currentPage, screenSize }: Props) {
         .then(() => setOpenModal(true))
         .catch((error) => setError(error));
     }
-  }, [isRaceStart, raceResult, writeWinner, data?.result]);
+  }, [isRaceStart, raceResult]);
 
   const resetHandler = useCallback(() => {
     setRaceResult(null);
