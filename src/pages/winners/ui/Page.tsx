@@ -1,21 +1,20 @@
-import { useState } from 'react';
 import { MESSAGES, WINNERSPERPAGE } from '../../../shared/lib/const';
 import Pagination from '../../../shared/ui/Pagination/ui/Pagination';
 import { winnerApi } from '../../../entities/winner/api/winnerApi';
-import {
-  Order, Sort, SortOrderType, Winner,
-} from '../../../entities/winner/model/types';
+import { Order, Sort, Winner } from '../../../entities/winner/model/types';
 import CarIcon from '../../../entities/car/assets/car.svg?react';
 import { useAppDispatch, useAppSelector } from '../../../shared/model/hooks';
 import {
   selectedCurrentWinnerPage,
+  selectedOrder,
   setWinnerCurrentPage,
+  sortWinners,
 } from '../../../entities/winner/model/winnerSlice';
 import { serverErrorHandler } from '../../../shared/lib/functions';
 
 function WinnersPage() {
   let content;
-  const [sortAndOrder, setSortAndOrder] = useState<SortOrderType>({ sort: null, order: null });
+  const sortAndOrder = useAppSelector(selectedOrder);
   const currentPage = useAppSelector(selectedCurrentWinnerPage);
   const dispatch = useAppDispatch();
   const {
@@ -29,8 +28,8 @@ function WinnersPage() {
 
   function sortTable(sort: Sort) {
     return sortAndOrder.order === Order.ASC
-      ? setSortAndOrder({ sort, order: Order.DESC })
-      : setSortAndOrder({ sort, order: Order.ASC });
+      ? dispatch(sortWinners({ sort, order: Order.DESC }))
+      : dispatch(sortWinners({ sort, order: Order.ASC }));
   }
 
   if (isLoading) {

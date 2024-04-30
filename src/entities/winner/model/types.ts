@@ -14,6 +14,7 @@ export type Winner = {
 
 export type WinnerType = {
   currentWinnerPage: number;
+  sortAndOrder: SortOrderType;
 };
 
 export enum Sort {
