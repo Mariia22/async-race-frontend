@@ -58,7 +58,7 @@ function WinnersPage() {
                 Wins
               </td>
               <td className={styles.winnerSort} onClick={() => sortTable(Sort.time)}>
-                Best times(seconds)
+                Best times(sec)
               </td>
             </tr>
           </thead>

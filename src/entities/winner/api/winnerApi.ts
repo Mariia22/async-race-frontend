@@ -30,7 +30,7 @@ export const winnerApi = createApi({
         const responseWinners = await fetchWithBQ({
           url: '/winners',
           params: {
-            page,
+            _page: page,
             _limit: limit,
             _sort: sort,
             _order: order,
